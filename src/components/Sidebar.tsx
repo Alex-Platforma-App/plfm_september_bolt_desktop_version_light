@@ -30,10 +30,14 @@ interface NavItem {
   section?: 'universal' | 'personal';
 }
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  activeSection: string;
+  setActiveSection: (section: string) => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSection }) => {
   const { currentRole, currentOrganization, sidebarCollapsed } = useApp();
   const { isAuthenticated } = useAuth();
-  const [activeItem, setActiveItem] = React.useState('dashboard');
 
   const getNavigationItems = (): NavItem[] => {
     const universal: NavItem[] = [
@@ -112,9 +116,9 @@ export const Sidebar: React.FC = () => {
               {universalItems.map((item) => (
                 <li key={item.id}>
                   <button
-                    onClick={() => setActiveItem(item.id)}
+                    onClick={() => setActiveSection(item.id)}
                     className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                      activeItem === item.id
+                      activeSection === item.id
                         ? 'bg-yellow-400 text-slate-900'
                         : 'text-slate-700 hover:bg-slate-100'
                     } ${sidebarCollapsed ? 'justify-center' : 'justify-start space-x-3'}`}
@@ -142,9 +146,9 @@ export const Sidebar: React.FC = () => {
                 {personalItems.map((item) => (
                   <li key={item.id}>
                     <button
-                      onClick={() => setActiveItem(item.id)}
+                      onClick={() => setActiveSection(item.id)}
                       className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                        activeItem === item.id
+                        activeSection === item.id
                           ? 'bg-yellow-400 text-slate-900'
                           : 'text-slate-700 hover:bg-slate-100'
                       } ${sidebarCollapsed ? 'justify-center' : 'justify-start space-x-3'}`}
