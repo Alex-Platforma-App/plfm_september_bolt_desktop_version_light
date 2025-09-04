@@ -50,7 +50,7 @@ export const Header: React.FC = () => {
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <img 
-                src="/logo.png" 
+                src="/Group 1321314681.png" 
                 alt="Platforma Logo" 
                 className="h-8 w-auto hover:opacity-80 transition-opacity"
               />
