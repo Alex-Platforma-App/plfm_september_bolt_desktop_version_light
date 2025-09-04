@@ -8,7 +8,7 @@ export const HomeDashboard: React.FC = () => {
       <div className="text-center py-12">
         <div className="flex flex-col items-center mb-4">
           <img 
-            src="/Group 1321314681.png" 
+            src="/Group 1321314725 copy.png" 
             alt="Platforma Logo" 
             className="h-16 w-auto mb-2 hover:opacity-80 transition-opacity"
           />
