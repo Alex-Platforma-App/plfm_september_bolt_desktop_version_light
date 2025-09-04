@@ -10,6 +10,26 @@ import { SupplierDashboard } from './components/dashboards/SupplierDashboard';
 import { AuthProvider } from './context/AuthContext';
 import { AppProvider, useApp } from './context/AppContext';
 import { useAuth } from './context/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { AllCatalogs } from './components/AllCatalogs';
+import { AllWishlists } from './components/dashboards/AllWishlists';
+import { Network } from './components/dashboards/Network';
+import { Analytics } from './components/dashboards/Analytics';
+import { DonorProjects } from './components/dashboards/DonorProjects';
+import { DonorImpactMetrics } from './components/dashboards/DonorImpactMetrics';
+import { DonorToGive } from './components/dashboards/DonorToGive';
+import { RecipientRequests } from './components/dashboards/RecipientRequests';
+import { RecipientWishlist } from './components/dashboards/RecipientWishlist';
+import { RecipientLogistics } from './components/dashboards/RecipientLogistics';
+import { RecipientNonprofits } from './components/dashboards/RecipientNonprofits';
+import { NonprofitInventory } from './components/dashboards/NonprofitInventory';
+import { NonprofitFundraisers } from './components/dashboards/NonprofitFundraisers';
+import { NonprofitRequests } from './components/dashboards/NonprofitRequests';
+import { NonprofitLogistics } from './components/dashboards/NonprofitLogistics';
+import { NonprofitDocuments } from './components/dashboards/NonprofitDocuments';
+import { SupplierCatalog } from './components/dashboards/SupplierCatalog';
+import { SupplierAnalytics } from './components/dashboards/SupplierAnalytics';
+import { SupplierDocuments } from './components/dashboards/SupplierDocuments';
 
 const AppContent: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -39,137 +59,83 @@ const AppContent: React.FC = () => {
         }
       case 'catalogs':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">All Catalogs</h1>
-            <p className="text-slate-600">Browse all available product catalogs from suppliers.</p>
-          </div>
+          <AllCatalogs />
         );
       case 'wishlists':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">All Wishlists</h1>
-            <p className="text-slate-600">View wishlists from organizations and individuals in need.</p>
-          </div>
+          <AllWishlists />
         );
       case 'network':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">Network</h1>
-            <p className="text-slate-600">Connect with organizations, suppliers, and other users.</p>
-          </div>
+          <Network />
         );
       case 'analytics':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">Analytics</h1>
-            <p className="text-slate-600">View platform-wide analytics and impact metrics.</p>
-          </div>
+          <Analytics />
         );
       // Personal sections
       case 'inventory':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">My Inventory</h1>
-            <p className="text-slate-600">Manage your organization's inventory.</p>
-          </div>
+          <NonprofitInventory />
         );
       case 'fundraisers':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">My Fundraisers</h1>
-            <p className="text-slate-600">Manage your active fundraising campaigns.</p>
-          </div>
+          <NonprofitFundraisers />
         );
       case 'requests':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">Requests</h1>
-            <p className="text-slate-600">View and manage aid requests.</p>
-          </div>
+          <NonprofitRequests />
         );
       case 'logistics':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">Logistics</h1>
-            <p className="text-slate-600">Track shipments and manage logistics operations.</p>
-          </div>
+          <NonprofitLogistics />
         );
       case 'documents':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">My Documents</h1>
-            <p className="text-slate-600">Manage your organization's documents and certifications.</p>
-          </div>
+          <NonprofitDocuments />
         );
       case 'catalog':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">My Catalog</h1>
-            <p className="text-slate-600">Manage your product catalog and listings.</p>
-          </div>
+          <SupplierCatalog />
         );
       case 'orders':
         return (
           <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">Orders</h1>
-            <p className="text-slate-600">View and manage customer orders.</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Orders</h1>
+            <p className="text-gray-600">View and manage customer orders.</p>
           </div>
         );
       case 'supplier-analytics':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">Supplier Analytics</h1>
-            <p className="text-slate-600">View your business performance metrics.</p>
-          </div>
+          <SupplierAnalytics />
         );
       case 'funded-projects':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">Funded Projects</h1>
-            <p className="text-slate-600">Track projects you've funded and their impact.</p>
-          </div>
+          <DonorProjects />
         );
       case 'impact':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">Impact Metrics</h1>
-            <p className="text-slate-600">View the impact of your donations.</p>
-          </div>
+          <DonorImpactMetrics />
         );
       case 'to-give':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">To Give</h1>
-            <p className="text-slate-600">Items you're planning to donate.</p>
-          </div>
+          <DonorToGive />
         );
       case 'my-requests':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">My Requests</h1>
-            <p className="text-slate-600">Track your aid requests and their status.</p>
-          </div>
+          <RecipientRequests />
         );
       case 'my-wishlist':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">My Wishlist</h1>
-            <p className="text-slate-600">Items you need and are hoping to receive.</p>
-          </div>
+          <RecipientWishlist />
         );
       case 'my-logistics':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">My Logistics</h1>
-            <p className="text-slate-600">Track your incoming shipments and deliveries.</p>
-          </div>
+          <RecipientLogistics />
         );
       case 'favorites':
         return (
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-slate-900 mb-4">Favorite Nonprofits</h1>
-            <p className="text-slate-600">Organizations you trust and support regularly.</p>
-          </div>
+          <RecipientNonprofits />
         );
       default:
         return <HomeDashboard />;
@@ -184,7 +150,7 @@ const AppContent: React.FC = () => {
           activeSection={activeSection} 
           setActiveSection={setActiveSection} 
         />
-        <main className="flex-1 ml-64">
+        <main className="flex-1 ml-64 p-6">
           {renderContent()}
         </main>
       </div>
@@ -194,11 +160,13 @@ const AppContent: React.FC = () => {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppProvider>
-        <AppContent />
-      </AppProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <AppProvider>
+          <AppContent />
+        </AppProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

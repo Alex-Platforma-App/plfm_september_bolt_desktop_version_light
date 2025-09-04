@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Filter, Package, DollarSign, Check, X, Clock, MapPin } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
-import { catalogItems } from '../../data/mockData';
+import { useTheme } from '../contexts/ThemeContext';
+import { catalogItems } from '../data/mockData';
 
 export const AllCatalogs: React.FC = () => {
   const { theme } = useTheme();
