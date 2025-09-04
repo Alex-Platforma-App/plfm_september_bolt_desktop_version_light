@@ -79,7 +79,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                 <th
                   key={column.key}
                   className={`px-4 py-3 text-left text-sm font-medium text-slate-600 ${
-                    column.sortable ? 'cursor-pointer hover:text-slate-900' : ''
+                    column.sortable ? 'cursor-pointer hover:text-gray-900' : ''
                   }`}
                   onClick={column.sortable ? () => handleSort(column.key) : undefined}
                 >
@@ -101,7 +101,7 @@ export const DataTable: React.FC<DataTableProps> = ({
             {sortedData.map((row, index) => (
               <tr key={index} className="hover:bg-gray-50">
                 {columns.map((column) => (
-                  <td key={column.key} className="px-4 py-3 text-sm text-slate-700">
+                  <td key={column.key} className="px-4 py-3 text-sm text-gray-700">
                     {column.render ? column.render(row[column.key], row) : row[column.key]}
                   </td>
                 ))}

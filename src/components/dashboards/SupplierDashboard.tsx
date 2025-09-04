@@ -81,8 +81,8 @@ export const SupplierDashboard: React.FC = () => {
       sortable: true,
       render: (value: string, row: any) => (
         <div>
-          <div className="font-medium text-slate-900">{value}</div>
-          <div className="text-sm text-slate-500">{row.category}</div>
+          <div className="font-medium text-gray-900">{value}</div>
+          <div className="text-sm text-gray-500">{row.category}</div>
         </div>
       )
     },
@@ -91,7 +91,7 @@ export const SupplierDashboard: React.FC = () => {
       title: 'Price',
       sortable: true,
       render: (value: string) => (
-        <span className="font-semibold text-slate-900">{value}</span>
+        <span className="font-semibold text-gray-900">{value}</span>
       )
     },
     {
@@ -99,7 +99,7 @@ export const SupplierDashboard: React.FC = () => {
       title: 'Stock',
       sortable: true,
       render: (value: number) => (
-        <span className={`font-medium ${value < 100 ? 'text-orange-600' : 'text-slate-900'}`}>
+        <span className={`font-medium ${value < 100 ? 'text-orange-600' : 'text-gray-900'}`}>
           {value}
         </span>
       )
@@ -109,7 +109,7 @@ export const SupplierDashboard: React.FC = () => {
       title: 'Orders',
       sortable: true,
       render: (value: number) => (
-        <span className="text-slate-700">{value}</span>
+        <span className="text-gray-700">{value}</span>
       )
     },
     {
@@ -128,7 +128,7 @@ export const SupplierDashboard: React.FC = () => {
       title: 'Order ID',
       sortable: true,
       render: (value: string) => (
-        <span className="font-mono text-sm text-slate-700">{value}</span>
+        <span className="font-mono text-sm text-gray-700">{value}</span>
       )
     },
     {
@@ -136,14 +136,14 @@ export const SupplierDashboard: React.FC = () => {
       title: 'Organization',
       sortable: true,
       render: (value: string) => (
-        <span className="font-medium text-slate-900">{value}</span>
+        <span className="font-medium text-gray-900">{value}</span>
       )
     },
     {
       key: 'items',
       title: 'Items',
       render: (value: string) => (
-        <span className="text-slate-700">{value}</span>
+        <span className="text-gray-700">{value}</span>
       )
     },
     {
@@ -151,7 +151,7 @@ export const SupplierDashboard: React.FC = () => {
       title: 'Value',
       sortable: true,
       render: (value: string) => (
-        <span className="font-semibold text-slate-900">{value}</span>
+        <span className="font-semibold text-gray-900">{value}</span>
       )
     },
     {
@@ -180,8 +180,8 @@ export const SupplierDashboard: React.FC = () => {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 mb-2">Supplier Dashboard</h1>
-        <p className="text-slate-600">Manage your humanitarian supply catalog and orders</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Supplier Dashboard</h1>
+        <p className="text-gray-600">Manage your humanitarian supply catalog and orders</p>
       </div>
 
       {/* Overview Cards */}
@@ -223,7 +223,7 @@ export const SupplierDashboard: React.FC = () => {
       {/* Product Performance */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-slate-900">Top Performing Products</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Top Performing Products</h2>
           <button className="px-4 py-2 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors">
             Manage Full Catalog
           </button>
@@ -238,7 +238,7 @@ export const SupplierDashboard: React.FC = () => {
       {/* Recent Orders */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-slate-900">Recent Orders</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Recent Orders</h2>
           <button className="px-4 py-2 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors">
             View All Orders
           </button>
@@ -255,23 +255,23 @@ export const SupplierDashboard: React.FC = () => {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center space-x-2 mb-4">
             <TrendingUp className="w-5 h-5 text-green-500" />
-            <h3 className="text-lg font-semibold text-slate-900">Sales Analytics</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Sales Analytics</h3>
           </div>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">Total Revenue</span>
-              <span className="font-semibold text-slate-900">$47,250</span>
+              <span className="text-gray-600">Total Revenue</span>
+              <span className="font-semibold text-gray-900">$47,250</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">Average Order Value</span>
-              <span className="font-semibold text-slate-900">$531</span>
+              <span className="text-gray-600">Average Order Value</span>
+              <span className="font-semibold text-gray-900">$531</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">Conversion Rate</span>
+              <span className="text-gray-600">Conversion Rate</span>
               <span className="font-semibold text-green-600">23.4%</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">Customer Retention</span>
+              <span className="text-gray-600">Customer Retention</span>
               <span className="font-semibold text-green-600">87.2%</span>
             </div>
           </div>
@@ -280,7 +280,7 @@ export const SupplierDashboard: React.FC = () => {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center space-x-2 mb-4">
             <FileText className="w-5 h-5 text-blue-500" />
-            <h3 className="text-lg font-semibold text-slate-900">Document Status</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Document Status</h3>
           </div>
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
@@ -288,8 +288,8 @@ export const SupplierDashboard: React.FC = () => {
                 <span className="text-xs font-bold text-green-600">12</span>
               </div>
               <div>
-                <p className="font-medium text-slate-900">Business Certifications</p>
-                <p className="text-sm text-slate-500">All current and valid</p>
+                <p className="font-medium text-gray-900">Business Certifications</p>
+                <p className="text-sm text-gray-500">All current and valid</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
@@ -297,8 +297,8 @@ export const SupplierDashboard: React.FC = () => {
                 <span className="text-xs font-bold text-blue-600">34</span>
               </div>
               <div>
-                <p className="font-medium text-slate-900">Product Invoices</p>
-                <p className="text-sm text-slate-500">Recent transactions</p>
+                <p className="font-medium text-gray-900">Product Invoices</p>
+                <p className="text-sm text-gray-500">Recent transactions</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
@@ -306,8 +306,8 @@ export const SupplierDashboard: React.FC = () => {
                 <span className="text-xs font-bold text-yellow-600">3</span>
               </div>
               <div>
-                <p className="font-medium text-slate-900">Expiring Soon</p>
-                <p className="text-sm text-slate-500">Need renewal</p>
+                <p className="font-medium text-gray-900">Expiring Soon</p>
+                <p className="text-sm text-gray-500">Need renewal</p>
               </div>
             </div>
           </div>

@@ -64,8 +64,8 @@ export const NonprofitDashboard: React.FC = () => {
       sortable: true,
       render: (value: string, row: any) => (
         <div>
-          <div className="font-medium text-slate-900">{value}</div>
-          <div className="text-sm text-slate-500">SKU: {row.sku}</div>
+          <div className="font-medium text-gray-900">{value}</div>
+          <div className="text-sm text-gray-500">SKU: {row.sku}</div>
         </div>
       )
     },
@@ -75,7 +75,7 @@ export const NonprofitDashboard: React.FC = () => {
       sortable: true,
       render: (value: number, row: any) => (
         <div>
-          <span className={`font-semibold ${value === 0 ? 'text-red-600' : value < 50 ? 'text-orange-600' : 'text-slate-900'}`}>
+          <span className={`font-semibold ${value === 0 ? 'text-red-600' : value < 50 ? 'text-orange-600' : 'text-gray-900'}`}>
             {value} {row.unit}
           </span>
         </div>
@@ -86,14 +86,14 @@ export const NonprofitDashboard: React.FC = () => {
       title: 'Unit Price',
       sortable: true,
       render: (value: string) => (
-        <span className="font-medium text-slate-900">{value}</span>
+        <span className="font-medium text-gray-900">{value}</span>
       )
     },
     {
       key: 'supplier',
       title: 'Supplier',
       render: (value: string) => (
-        <span className="text-slate-700">{value}</span>
+        <span className="text-gray-700">{value}</span>
       )
     },
     {
@@ -144,8 +144,8 @@ export const NonprofitDashboard: React.FC = () => {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 mb-2">Nonprofit Dashboard</h1>
-        <p className="text-slate-600">Manage inventory, fundraisers, and humanitarian operations</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Nonprofit Dashboard</h1>
+        <p className="text-gray-600">Manage inventory, fundraisers, and humanitarian operations</p>
       </div>
 
       {/* Overview Cards */}
@@ -185,7 +185,7 @@ export const NonprofitDashboard: React.FC = () => {
       {/* Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-4">Current Inventory Status</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Current Inventory Status</h3>
           <DataTable 
             columns={inventoryColumns} 
             data={inventoryData.slice(0, 5)}
@@ -199,19 +199,19 @@ export const NonprofitDashboard: React.FC = () => {
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-4">Active Fundraisers</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Active Fundraisers</h3>
           <div className="space-y-4">
             {fundraiserData.map((campaign, index) => (
               <div key={index} className="border rounded-lg p-4">
                 <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-medium text-slate-900">{campaign.name}</h4>
+                  <h4 className="font-medium text-gray-900">{campaign.name}</h4>
                   <span className={`text-xs px-2 py-1 rounded-full ${
                     campaign.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                   }`}>
                     {campaign.status}
                   </span>
                 </div>
-                <div className="flex justify-between text-sm text-slate-600 mb-2">
+                <div className="flex justify-between text-sm text-gray-600 mb-2">
                   <span>{campaign.raised} raised of {campaign.goal}</span>
                   <span>{campaign.donors} donors</span>
                 </div>
@@ -232,23 +232,23 @@ export const NonprofitDashboard: React.FC = () => {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center space-x-2 mb-4">
             <TrendingUp className="w-5 h-5 text-green-500" />
-            <h3 className="text-lg font-semibold text-slate-900">Distribution Analytics</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Distribution Analytics</h3>
           </div>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">Items Distributed This Month</span>
-              <span className="font-semibold text-slate-900">847</span>
+              <span className="text-gray-600">Items Distributed This Month</span>
+              <span className="font-semibold text-gray-900">847</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">Beneficiaries Served</span>
-              <span className="font-semibold text-slate-900">2,134</span>
+              <span className="text-gray-600">Beneficiaries Served</span>
+              <span className="font-semibold text-gray-900">2,134</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">Average Delivery Time</span>
+              <span className="text-gray-600">Average Delivery Time</span>
               <span className="font-semibold text-green-600">2.3 days</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">Success Rate</span>
+              <span className="text-gray-600">Success Rate</span>
               <span className="font-semibold text-green-600">97.8%</span>
             </div>
           </div>
@@ -257,23 +257,23 @@ export const NonprofitDashboard: React.FC = () => {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center space-x-2 mb-4">
             <Truck className="w-5 h-5 text-blue-500" />
-            <h3 className="text-lg font-semibold text-slate-900">Active Logistics</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Active Logistics</h3>
           </div>
           <div className="space-y-4">
             <div className="border-l-4 border-green-400 pl-4">
-              <h4 className="font-medium text-slate-900">Kyiv Medical Delivery</h4>
-              <p className="text-sm text-slate-600">150 trauma kits → 3 hospitals</p>
-              <p className="text-xs text-slate-500">ETA: 2 hours</p>
+              <h4 className="font-medium text-gray-900">Kyiv Medical Delivery</h4>
+              <p className="text-sm text-gray-600">150 trauma kits → 3 hospitals</p>
+              <p className="text-xs text-gray-500">ETA: 2 hours</p>
             </div>
             <div className="border-l-4 border-blue-400 pl-4">
-              <h4 className="font-medium text-slate-900">Lviv Supply Run</h4>
-              <p className="text-sm text-slate-600">Medical equipment → Children's Hospital</p>
-              <p className="text-xs text-slate-500">ETA: Tomorrow 9 AM</p>
+              <h4 className="font-medium text-gray-900">Lviv Supply Run</h4>
+              <p className="text-sm text-gray-600">Medical equipment → Children's Hospital</p>
+              <p className="text-xs text-gray-500">ETA: Tomorrow 9 AM</p>
             </div>
             <div className="border-l-4 border-yellow-400 pl-4">
-              <h4 className="font-medium text-slate-900">Kharkiv Emergency Response</h4>
-              <p className="text-sm text-slate-600">Evacuation supplies → Coordination Center</p>
-              <p className="text-xs text-slate-500">Scheduled: This weekend</p>
+              <h4 className="font-medium text-gray-900">Kharkiv Emergency Response</h4>
+              <p className="text-sm text-gray-600">Evacuation supplies → Coordination Center</p>
+              <p className="text-xs text-gray-500">Scheduled: This weekend</p>
             </div>
           </div>
         </div>

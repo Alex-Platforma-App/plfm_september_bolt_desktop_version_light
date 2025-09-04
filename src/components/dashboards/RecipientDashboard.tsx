@@ -46,8 +46,8 @@ export const RecipientDashboard: React.FC = () => {
       sortable: true,
       render: (value: string, row: any) => (
         <div>
-          <div className="font-medium text-slate-900">{value}</div>
-          <div className="text-sm text-slate-500">{row.organization}</div>
+          <div className="font-medium text-gray-900">{value}</div>
+          <div className="text-sm text-gray-500">{row.organization}</div>
         </div>
       )
     },
@@ -56,7 +56,7 @@ export const RecipientDashboard: React.FC = () => {
       title: 'Value',
       sortable: true,
       render: (value: string) => (
-        <span className="font-semibold text-slate-900">{value}</span>
+        <span className="font-semibold text-gray-900">{value}</span>
       )
     },
     {
@@ -102,8 +102,8 @@ export const RecipientDashboard: React.FC = () => {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 mb-2">Recipient Dashboard</h1>
-        <p className="text-slate-600">Manage your aid requests and track deliveries</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Recipient Dashboard</h1>
+        <p className="text-gray-600">Manage your aid requests and track deliveries</p>
       </div>
 
       {/* Overview Cards */}
@@ -142,7 +142,7 @@ export const RecipientDashboard: React.FC = () => {
       {/* My Requests Table */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-slate-900">My Requests</h2>
+          <h2 className="text-lg font-semibold text-gray-900">My Requests</h2>
           <button className="px-4 py-2 bg-yellow-400 text-slate-900 font-medium rounded-lg hover:bg-yellow-500 transition-colors">
             Submit New Request
           </button>
@@ -159,57 +159,57 @@ export const RecipientDashboard: React.FC = () => {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center space-x-2 mb-4">
             <Clock className="w-5 h-5 text-blue-500" />
-            <h3 className="text-lg font-semibold text-slate-900">Recent Activity</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Recent Activity</h3>
           </div>
           <div className="space-y-4">
             <div className="flex items-start space-x-3">
               <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
               <div>
-                <p className="font-medium text-slate-900">Request approved</p>
-                <p className="text-sm text-slate-600">Emergency medical supplies - $450</p>
-                <p className="text-xs text-slate-500">2 hours ago</p>
+                <p className="font-medium text-gray-900">Request approved</p>
+                <p className="text-sm text-gray-600">Emergency medical supplies - $450</p>
+                <p className="text-xs text-gray-500">2 hours ago</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
               <Truck className="w-5 h-5 text-blue-500 mt-0.5" />
               <div>
-                <p className="font-medium text-slate-900">Shipment dispatched</p>
-                <p className="text-sm text-slate-600">Food package from WFP - ETA: Tomorrow</p>
-                <p className="text-xs text-slate-500">6 hours ago</p>
+                <p className="font-medium text-gray-900">Shipment dispatched</p>
+                <p className="text-sm text-gray-600">Food package from WFP - ETA: Tomorrow</p>
+                <p className="text-xs text-gray-500">6 hours ago</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
               <Heart className="w-5 h-5 text-red-500 mt-0.5" />
               <div>
-                <p className="font-medium text-slate-900">New wishlist match</p>
-                <p className="text-sm text-slate-600">Winter clothing available from local donor</p>
-                <p className="text-xs text-slate-500">1 day ago</p>
+                <p className="font-medium text-gray-900">New wishlist match</p>
+                <p className="text-sm text-gray-600">Winter clothing available from local donor</p>
+                <p className="text-xs text-gray-500">1 day ago</p>
               </div>
             </div>
           </div>
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-4">Delivery Tracking</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Delivery Tracking</h3>
           <div className="space-y-4">
             <div className="border rounded-lg p-4">
               <div className="flex justify-between items-start mb-2">
-                <h4 className="font-medium text-slate-900">Emergency Medical Package</h4>
+                <h4 className="font-medium text-gray-900">Emergency Medical Package</h4>
                 <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">In Transit</span>
               </div>
-              <p className="text-sm text-slate-600 mb-2">From: Red Cross Warehouse, Warsaw</p>
-              <p className="text-sm text-slate-600 mb-3">ETA: Today, 3:00 PM</p>
+              <p className="text-sm text-gray-600 mb-2">From: Red Cross Warehouse, Warsaw</p>
+              <p className="text-sm text-gray-600 mb-3">ETA: Today, 3:00 PM</p>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div className="bg-green-500 h-2 rounded-full" style={{ width: '80%' }}></div>
               </div>
             </div>
             <div className="border rounded-lg p-4">
               <div className="flex justify-between items-start mb-2">
-                <h4 className="font-medium text-slate-900">Winter Clothing Set</h4>
+                <h4 className="font-medium text-gray-900">Winter Clothing Set</h4>
                 <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Processing</span>
               </div>
-              <p className="text-sm text-slate-600 mb-2">From: Local Donor, Kyiv</p>
-              <p className="text-sm text-slate-600 mb-3">ETA: Tomorrow, 10:00 AM</p>
+              <p className="text-sm text-gray-600 mb-2">From: Local Donor, Kyiv</p>
+              <p className="text-sm text-gray-600 mb-3">ETA: Tomorrow, 10:00 AM</p>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div className="bg-blue-500 h-2 rounded-full" style={{ width: '30%' }}></div>
               </div>
