@@ -6,14 +6,13 @@ export const HomeDashboard: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="text-center py-12">
-        <div className="flex items-center justify-center space-x-3 mb-4">
-          <div className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center">
-            <span className="text-slate-900 font-bold text-xl">A</span>
-          </div>
-          <div className="flex flex-col items-start">
-            <h1 className="text-3xl font-bold text-slate-900">Platforma</h1>
-            <p className="text-slate-600">Humanitarian Logistics Platform</p>
-          </div>
+        <div className="flex flex-col items-center mb-4">
+          <img 
+            src="/logo.png" 
+            alt="Platforma Logo" 
+            className="h-16 w-auto mb-2 hover:opacity-80 transition-opacity"
+          />
+          <p className="text-slate-600">Humanitarian Logistics Platform</p>
         </div>
         <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-8">
           Transform humanitarian logistics through technology, making aid delivery transparent, 

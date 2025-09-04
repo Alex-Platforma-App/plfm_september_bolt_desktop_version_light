@@ -49,13 +49,12 @@ export const Header: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-yellow-400 rounded flex items-center justify-center">
-                <span className="text-slate-900 font-bold text-lg">A</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-slate-900 font-semibold text-lg">platforma</span>
-                <span className="text-slate-500 text-xs">Fueling Impact</span>
-              </div>
+              <img 
+                src="/logo.png" 
+                alt="Platforma Logo" 
+                className="h-8 w-auto hover:opacity-80 transition-opacity"
+              />
+              <span className="text-slate-500 text-xs">Fueling Impact</span>
             </div>
 
             {/* Context Switcher */}
