@@ -10,7 +10,6 @@ import { SupplierDashboard } from './components/dashboards/SupplierDashboard';
 import { AuthProvider } from './context/AuthContext';
 import { AppProvider, useApp } from './context/AppContext';
 import { useAuth } from './context/AuthContext';
-import { ThemeProvider } from './contexts/ThemeContext';
 import { AllCatalogs } from './components/AllCatalogs';
 import { AllWishlists } from './components/dashboards/AllWishlists';
 import { Network } from './components/dashboards/Network';
@@ -31,25 +30,6 @@ import { SupplierCatalog } from './components/dashboards/SupplierCatalog';
 import { SupplierAnalytics } from './components/dashboards/SupplierAnalytics';
 import { SupplierDocuments } from './components/dashboards/SupplierDocuments';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { AllCatalogs } from './components/AllCatalogs';
-import { AllWishlists } from './components/dashboards/AllWishlists';
-import { Network } from './components/dashboards/Network';
-import { Analytics } from './components/dashboards/Analytics';
-import { DonorProjects } from './components/dashboards/DonorProjects';
-import { DonorImpactMetrics } from './components/dashboards/DonorImpactMetrics';
-import { DonorToGive } from './components/dashboards/DonorToGive';
-import { RecipientRequests } from './components/dashboards/RecipientRequests';
-import { RecipientWishlist } from './components/dashboards/RecipientWishlist';
-import { RecipientLogistics } from './components/dashboards/RecipientLogistics';
-import { RecipientNonprofits } from './components/dashboards/RecipientNonprofits';
-import { NonprofitInventory } from './components/dashboards/NonprofitInventory';
-import { NonprofitFundraisers } from './components/dashboards/NonprofitFundraisers';
-import { NonprofitRequests } from './components/dashboards/NonprofitRequests';
-import { NonprofitLogistics } from './components/dashboards/NonprofitLogistics';
-import { NonprofitDocuments } from './components/dashboards/NonprofitDocuments';
-import { SupplierCatalog } from './components/dashboards/SupplierCatalog';
-import { SupplierAnalytics } from './components/dashboards/SupplierAnalytics';
-import { SupplierDocuments } from './components/dashboards/SupplierDocuments';
 
 const AppContent: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -131,8 +111,6 @@ function App() {
         <AppProvider>
           <AppContent />
         </AppProvider>
-      </AuthProvider>
-    </ThemeProvider>
       </AuthProvider>
     </ThemeProvider>
   );
