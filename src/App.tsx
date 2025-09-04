@@ -29,6 +29,7 @@ import { NonprofitDocuments } from './components/dashboards/NonprofitDocuments';
 import { SupplierCatalog } from './components/dashboards/SupplierCatalog';
 import { SupplierAnalytics } from './components/dashboards/SupplierAnalytics';
 import { SupplierDocuments } from './components/dashboards/SupplierDocuments';
+import { SupplierOrders } from './components/dashboards/SupplierOrders';
 import { ThemeProvider } from './contexts/ThemeContext';
 
 const AppContent: React.FC = () => {
@@ -84,10 +85,7 @@ const AppContent: React.FC = () => {
         );
       case 'orders':
         return (
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Orders</h1>
-            <p className="text-gray-600">View and manage customer orders.</p>
-          </div>
+          <SupplierOrders />
         );
       case 'donor-projects':
         return (

@@ -1,16 +1,7 @@
 import React from 'react';
 import { BarChart3, TrendingUp, Package, Users, Activity, Heart } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
 
 export const Analytics: React.FC = () => {
-  const { theme } = useTheme();
-
-  const cardStyle = {
-    background: theme === 'dark' 
-      ? 'linear-gradient(135deg, #171c29 0%, #1a1f2e 33%, #1f2535 66%, #252b3d 100%)'
-      : 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 33%, #f1f3f4 66%, #e5e7eb 100%)'
-  };
-
   const analyticsCards = [
     {
       title: 'Popular Items',
@@ -57,14 +48,10 @@ export const Analytics: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <h2 className={`text-2xl font-bold ${
-          theme === 'dark' ? 'text-white' : 'text-gray-900'
-        }`}>
+        <h2 className="text-2xl font-bold text-gray-900">
           Analytics
         </h2>
-        <p className={`${
-          theme === 'dark' ? 'text-slate-400' : 'text-gray-600'
-        }`}>
+        <p className="text-gray-600">
           Platform-wide insights and humanitarian impact data
         </p>
       </div>
@@ -76,35 +63,27 @@ export const Analytics: React.FC = () => {
           return (
             <div 
               key={index} 
-              style={cardStyle}
-              className={`rounded-xl p-6 border ${
-              theme === 'dark'
-                ? 'border-slate-700'
-                : 'border-gray-200'
-            }`}>
+              className="bg-white rounded-xl p-6 border border-gray-200"
+            >
               <div className="flex items-center space-x-3 mb-4">
                 <div className={`p-2 rounded-lg ${
-                  index === 0 ? 'bg-blue-100 dark:bg-blue-900/30' :
-                  index === 1 ? 'bg-green-100 dark:bg-green-900/30' :
-                  index === 2 ? 'bg-purple-100 dark:bg-purple-900/30' :
-                  'bg-red-100 dark:bg-red-900/30'
+                  index === 0 ? 'bg-blue-100' :
+                  index === 1 ? 'bg-green-100' :
+                  index === 2 ? 'bg-purple-100' :
+                  'bg-red-100'
                 }`}>
                   <Icon className={`w-6 h-6 ${
-                    index === 0 ? 'text-blue-600 dark:text-blue-400' :
-                    index === 1 ? 'text-green-600 dark:text-green-400' :
-                    index === 2 ? 'text-purple-600 dark:text-purple-400' :
-                    'text-red-600 dark:text-red-400'
+                    index === 0 ? 'text-blue-600' :
+                    index === 1 ? 'text-green-600' :
+                    index === 2 ? 'text-purple-600' :
+                    'text-red-600'
                   }`} />
                 </div>
                 <div>
-                  <h3 className={`font-semibold ${
-                    theme === 'dark' ? 'text-white' : 'text-gray-900'
-                  }`}>
+                  <h3 className="font-semibold text-gray-900">
                     {card.title}
                   </h3>
-                  <p className={`text-sm ${
-                    theme === 'dark' ? 'text-slate-400' : 'text-gray-600'
-                  }`}>
+                  <p className="text-sm text-gray-600">
                     {card.description}
                   </p>
                 </div>
@@ -113,15 +92,11 @@ export const Analytics: React.FC = () => {
               <div className="space-y-3">
                 {card.metrics.map((metric, metricIndex) => (
                   <div key={metricIndex} className="flex items-center justify-between">
-                    <span className={`text-sm ${
-                      theme === 'dark' ? 'text-slate-300' : 'text-gray-700'
-                    }`}>
+                    <span className="text-sm text-gray-700">
                       {metric.label}
                     </span>
                     <div className="flex items-center space-x-2">
-                      <span className={`font-semibold ${
-                        theme === 'dark' ? 'text-white' : 'text-gray-900'
-                      }`}>
+                      <span className="font-semibold text-gray-900">
                         {metric.value}
                       </span>
                       <div className="flex items-center space-x-1">
@@ -135,11 +110,7 @@ export const Analytics: React.FC = () => {
                 ))}
               </div>
 
-              <button className={`w-full mt-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                theme === 'dark'
-                  ? 'text-blue-400 hover:bg-slate-800'
-                  : 'text-blue-600 hover:bg-blue-50'
-              }`}>
+              <button className="w-full mt-4 py-2 text-sm font-medium rounded-lg transition-colors text-blue-600 hover:bg-blue-50">
                 View Detailed Analytics
               </button>
             </div>
