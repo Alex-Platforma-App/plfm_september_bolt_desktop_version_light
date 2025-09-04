@@ -55,6 +55,34 @@ const AppContent: React.FC = () => {
         return (
           <AllCatalogs />
         );
+      case 'funded-projects':
+        return (
+          <DonorProjects />
+        );
+      case 'impact':
+        return (
+          <DonorImpactMetrics />
+        );
+      case 'to-give':
+        return (
+          <DonorToGive />
+        );
+      case 'my-requests':
+        return (
+          <RecipientRequests />
+        );
+      case 'my-wishlist':
+        return (
+          <RecipientWishlist />
+        );
+      case 'my-logistics':
+        return (
+          <RecipientLogistics />
+        );
+      case 'favorites':
+        return (
+          <RecipientNonprofits />
+        );
       case 'inventory':
         return (
           <NonprofitInventory />
