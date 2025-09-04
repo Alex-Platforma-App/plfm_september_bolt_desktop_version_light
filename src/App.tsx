@@ -33,58 +33,92 @@ import { ThemeProvider } from './contexts/ThemeContext';
 
 const AppContent: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
-          <AllWishlists />
+
+  const renderContent = () => {
     switch (activeSection) {
       case 'home':
         return <HomeDashboard />;
+      case 'network':
+        return (
           <Network />
-            return <NonprofitDashboard />;
-          } else if (currentOrganization.type === 'supplier') {
-            return <SupplierDashboard />;
+        );
+      case 'analytics':
+        return (
           <Analytics />
-            return <DonorDashboard />;
-          case 'recipient':
-            return <RecipientDashboard />;
-          default:
-          <NonprofitInventory />
-          <AllCatalogs />
         );
       case 'wishlists':
-          <NonprofitFundraisers />
         return (
-          <Network />
+          <AllWishlists />
         );
-          <NonprofitRequests />
-      // Personal sections
+      case 'catalogs':
+        return (
+          <AllCatalogs />
+        );
       case 'inventory':
         return (
-          <NonprofitLogistics />
+          <NonprofitInventory />
+        );
+      case 'fundraisers':
+        return (
           <NonprofitFundraisers />
         );
       case 'requests':
-          <NonprofitDocuments />
+        return (
+          <NonprofitRequests />
+        );
+      case 'logistics':
         return (
           <NonprofitLogistics />
         );
-          <SupplierCatalog />
+      case 'documents':
+        return (
+          <NonprofitDocuments />
+        );
       case 'catalog':
         return (
           <SupplierCatalog />
         );
+      case 'supplier-analytics':
+        return (
+          <SupplierAnalytics />
+        );
+      case 'orders':
+        return (
+          <div>
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Orders</h1>
             <p className="text-gray-600">View and manage customer orders.</p>
-          <AllCatalogs />
-          <SupplierAnalytics />
+          </div>
+        );
+      case 'donor-projects':
+        return (
           <DonorProjects />
+        );
+      case 'donor-impact':
+        return (
           <DonorImpactMetrics />
+        );
+      case 'donor-give':
+        return (
           <DonorToGive />
+        );
+      case 'recipient-requests':
+        return (
           <RecipientRequests />
+        );
+      case 'recipient-wishlist':
+        return (
           <RecipientWishlist />
+        );
+      case 'recipient-logistics':
+        return (
           <RecipientLogistics />
         );
       case 'favorites':
         return (
           <RecipientNonprofits />
+        );
+      default:
+        return <HomeDashboard />;
     }
   };
 
