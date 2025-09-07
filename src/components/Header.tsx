@@ -89,14 +89,6 @@ export const Header: React.FC = () => {
                       >
                        Personal Profile
                       </button>
-                      <button
-                        onClick={() => handleRoleSwitch('recipient')}
-                        className={`w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 ${
-                          !currentOrganization && currentRole === 'recipient' ? 'bg-yellow-50 text-yellow-800' : 'text-slate-700'
-                        }`}
-                      >
-                        Individual Recipient
-                      </button>
 
                       <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide px-3 py-2 mt-3">
                         Organizations
