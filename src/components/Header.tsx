@@ -46,7 +46,7 @@ export const Header: React.FC = () => {
     if (currentOrganization) {
       return `${currentOrganization.name} (${currentOrganization.role})`;
     }
-    return `Individual ${currentRole.charAt(0).toUpperCase() + currentRole.slice(1)}`;
+    return 'Individual Profile';
   };
 
   return (
