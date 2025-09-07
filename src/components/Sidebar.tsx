@@ -93,9 +93,43 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSectio
     return [...universal, ...personal, ...donorItems, ...recipientItems, ...nonprofitItems, ...supplierItems];
   };
 
-  const navigationItems = getNavigationItems();
+  // Context-aware navigation based on organization type
+  const getContextualNavigation = () => {
+    if (currentOrganization?.type === 'nonprofit') {
+      const nonprofitNav = [
+        { id: 'home', label: 'Home Dashboard', icon: <Home className="w-5 h-5" />, section: 'universal' },
+        { id: 'nonprofit-dashboard', label: 'Nonprofit Dashboard', icon: <Target className="w-5 h-5" />, section: 'main' },
+        { id: 'inventory', label: 'My Inventory', icon: <Archive className="w-5 h-5" />, section: 'sub' },
+        { id: 'fundraisers', label: 'My Fundraisers', icon: <Target className="w-5 h-5" />, section: 'sub' },
+        { id: 'requests', label: 'Requests', icon: <FileText className="w-5 h-5" />, section: 'sub' },
+        { id: 'logistics', label: 'Logistics', icon: <Truck className="w-5 h-5" />, section: 'sub' },
+        { id: 'documents', label: 'My Documents', icon: <FolderOpen className="w-5 h-5" />, section: 'sub' }
+      ];
+      return nonprofitNav;
+    }
+    
+    if (currentOrganization?.type === 'supplier') {
+      const supplierNav = [
+        { id: 'home', label: 'Home Dashboard', icon: <Home className="w-5 h-5" />, section: 'universal' },
+        { id: 'supplier-dashboard', label: 'Supplier Dashboard', icon: <Package className="w-5 h-5" />, section: 'main' },
+        { id: 'catalog', label: 'My Catalog', icon: <Package className="w-5 h-5" />, section: 'sub' },
+        { id: 'orders', label: 'Orders', icon: <ShoppingCart className="w-5 h-5" />, section: 'sub' },
+        { id: 'supplier-analytics', label: 'Analytics', icon: <BarChart3 className="w-5 h-5" />, section: 'sub' }
+      ];
+      return supplierNav;
+    }
+    
+    // Default navigation for individual users
+    return getNavigationItems();
+  };
+
+  const navigationItems = getContextualNavigation();
+  
+  // Filter items based on context
   const universalItems = navigationItems.filter(item => item.section === 'universal');
   const personalItems = navigationItems.filter(item => item.section === 'personal');
+  const mainItems = navigationItems.filter(item => item.section === 'main');
+  const subItems = navigationItems.filter(item => item.section === 'sub');
   const donorMainItems = navigationItems.filter(item => item.section === 'donor-main');
   const donorSubItems = navigationItems.filter(item => item.section === 'donor-sub');
   const recipientMainItems = navigationItems.filter(item => item.section === 'recipient-main');
@@ -128,55 +162,159 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSectio
     }`}>
       <div className="h-full flex flex-col overflow-y-auto">
         <nav className="flex-1 px-3 py-4 space-y-6">
-          {/* Universal Section */}
-          <div>
-            {!sidebarCollapsed && (
-              <div className="px-3 mb-3">
-                <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  Browse
-                </h3>
+          {/* Context-aware navigation */}
+          {currentOrganization?.type === 'nonprofit' ? (
+            // Nonprofit-specific navigation
+            <div>
+              {!sidebarCollapsed && (
+                <div className="px-3 mb-3">
+                  <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Nonprofit Operations
+                  </h3>
+                </div>
+              )}
+              <ul className="space-y-1">
+                {universalItems.map((item) => renderNavItem(item))}
+                {mainItems.map((item) => renderNavItem(item))}
+                {subItems.map((item) => renderNavItem(item, true))}
+              </ul>
+            </div>
+          ) : currentOrganization?.type === 'supplier' ? (
+            // Supplier-specific navigation
+            <div>
+              {!sidebarCollapsed && (
+                <div className="px-3 mb-3">
+                  <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Supplier Operations
+                  </h3>
+                </div>
+              )}
+              <ul className="space-y-1">
+                {universalItems.map((item) => renderNavItem(item))}
+                {mainItems.map((item) => renderNavItem(item))}
+                {subItems.map((item) => renderNavItem(item, true))}
+              </ul>
+            </div>
+          ) : (
+            // Default navigation for individual users
+            <>
+              {/* Universal Section */}
+              <div>
+                {!sidebarCollapsed && (
+                  <div className="px-3 mb-3">
+                    <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                      Browse
+                    </h3>
+                  </div>
+                )}
+                <ul className="space-y-1">
+                  {universalItems.map((item) => renderNavItem(item))}
+                </ul>
               </div>
-            )}
-            <ul className="space-y-1">
-              {universalItems.map((item) => renderNavItem(item))}
-            </ul>
-          </div>
 
-          {/* Personal Section */}
-          {isAuthenticated && personalItems.length > 0 && (
-            <div>
-              {!sidebarCollapsed && (
-                <div className="px-3 mb-3">
-                  <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Personal
-                  </h3>
+              {/* Personal Section */}
+              {isAuthenticated && personalItems.length > 0 && (
+                <div>
+                  {!sidebarCollapsed && (
+                    <div className="px-3 mb-3">
+                      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                        Personal
+                      </h3>
+                    </div>
+                  )}
+                  <ul className="space-y-1">
+                    {personalItems.map((item) => renderNavItem(item))}
+                  </ul>
                 </div>
               )}
-              <ul className="space-y-1">
-                {personalItems.map((item) => renderNavItem(item))}
-              </ul>
-            </div>
-          )}
 
-          {/* Donor Section */}
-          {isAuthenticated && (
-            <div>
-              {!sidebarCollapsed && (
-                <div className="px-3 mb-3">
-                  <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Donor
-                  </h3>
+              {/* Donor Section */}
+              {isAuthenticated && (
+                <div>
+                  {!sidebarCollapsed && (
+                    <div className="px-3 mb-3">
+                      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                        Donor
+                      </h3>
+                    </div>
+                  )}
+                  <ul className="space-y-1">
+                    {donorMainItems.map((item) => renderNavItem(item))}
+                    {donorSubItems.map((item) => renderNavItem(item, true))}
+                  </ul>
                 </div>
               )}
-              <ul className="space-y-1">
-                {donorMainItems.map((item) => renderNavItem(item))}
-                {donorSubItems.map((item) => renderNavItem(item, true))}
-              </ul>
-            </div>
-          )}
 
-          {/* Recipient Section */}
-          {isAuthenticated && (
+              {/* Recipient Section */}
+              {isAuthenticated && (
+                <div>
+                  {!sidebarCollapsed && (
+                    <div className="px-3 mb-3">
+                      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                        Recipient
+                      </h3>
+                    </div>
+                  )}
+                  <ul className="space-y-1">
+                    {recipientMainItems.map((item) => renderNavItem(item))}
+                    {recipientSubItems.map((item) => renderNavItem(item, true))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Nonprofit Section */}
+              {isAuthenticated && (
+                <div>
+                  {!sidebarCollapsed && (
+                    <div className="px-3 mb-3">
+                      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                        Nonprofit
+                      </h3>
+                    </div>
+                  )}
+                  <ul className="space-y-1">
+                    {nonprofitMainItems.map((item) => renderNavItem(item))}
+                    {nonprofitSubItems.map((item) => renderNavItem(item, true))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Supplier Section */}
+              {isAuthenticated && (
+                <div>
+                  {!sidebarCollapsed && (
+                    <div className="px-3 mb-3">
+                      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                        Supplier
+                      </h3>
+                    </div>
+                  )}
+                  <ul className="space-y-1">
+                    {supplierMainItems.map((item) => renderNavItem(item))}
+                    {supplierSubItems.map((item) => renderNavItem(item, true))}
+                  </ul>
+                </div>
+              )}
+            </>
+          )}
+        </nav>
+
+        {/* Settings */}
+        <div className="p-3 border-t border-gray-200">
+          <button
+            className={`w-full flex items-center px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors ${
+              sidebarCollapsed ? 'justify-center' : 'justify-start space-x-3'
+            }`}
+            title={sidebarCollapsed ? 'Settings' : undefined}
+          >
+            <Settings className="w-5 h-5" />
+            {!sidebarCollapsed && <span>Settings</span>}
+          </button>
+        </div>
+      </div>
+    </aside>
+  );
+};
             <div>
               {!sidebarCollapsed && (
                 <div className="px-3 mb-3">
