@@ -31,6 +31,7 @@ import { SupplierAnalytics } from './components/dashboards/SupplierAnalytics';
 import { SupplierDocuments } from './components/dashboards/SupplierDocuments';
 import { SupplierOrders } from './components/dashboards/SupplierOrders';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { DonorHistory } from './components/dashboards/DonorHistory';
 
 const AppContent: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -39,6 +40,16 @@ const AppContent: React.FC = () => {
     switch (activeSection) {
       case 'home':
         return <HomeDashboard />;
+      case 'my-dashboard':
+        return <Dashboard />;
+      case 'donor-dashboard':
+        return <DonorDashboard />;
+      case 'recipient-dashboard':
+        return <RecipientDashboard />;
+      case 'nonprofit-dashboard':
+        return <NonprofitDashboard />;
+      case 'supplier-dashboard':
+        return <SupplierDashboard />;
       case 'network':
         return (
           <Network />
@@ -55,15 +66,19 @@ const AppContent: React.FC = () => {
         return (
           <AllCatalogs />
         );
-      case 'funded-projects':
+      case 'donor-projects':
         return (
           <DonorProjects />
         );
-      case 'impact':
+      case 'donor-impact':
         return (
           <DonorImpactMetrics />
         );
-      case 'to-give':
+      case 'donor-history':
+        return (
+          <DonorHistory />
+        );
+      case 'donor-give':
         return (
           <DonorToGive />
         );
@@ -114,34 +129,6 @@ const AppContent: React.FC = () => {
       case 'orders':
         return (
           <SupplierOrders />
-        );
-      case 'donor-projects':
-        return (
-          <DonorProjects />
-        );
-      case 'donor-impact':
-        return (
-          <DonorImpactMetrics />
-        );
-      case 'donor-give':
-        return (
-          <DonorToGive />
-        );
-      case 'recipient-requests':
-        return (
-          <RecipientRequests />
-        );
-      case 'recipient-wishlist':
-        return (
-          <RecipientWishlist />
-        );
-      case 'recipient-logistics':
-        return (
-          <RecipientLogistics />
-        );
-      case 'favorites':
-        return (
-          <RecipientNonprofits />
         );
       default:
         return <HomeDashboard />;
