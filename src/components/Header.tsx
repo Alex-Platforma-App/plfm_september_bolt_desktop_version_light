@@ -30,8 +30,15 @@ export const Header: React.FC = () => {
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
 
   const handleRoleSwitch = (role: UserRole, org?: Organization) => {
-    setCurrentRole(role);
-    setCurrentOrganization(org || null);
+    if (org) {
+      // When selecting an organization, set both role and organization
+      setCurrentRole(org.type as UserRole); // 'nonprofit' or 'supplier'
+      setCurrentOrganization(org);
+    } else {
+      // When selecting individual roles, clear organization
+      setCurrentRole(role);
+      setCurrentOrganization(null);
+    }
     setShowContextMenu(false);
   };
 
@@ -97,7 +104,7 @@ export const Header: React.FC = () => {
                       {organizations.map((org) => (
                         <button
                           key={org.id}
-                          onClick={() => handleRoleSwitch(org.type, org)}
+                          onClick={() => handleRoleSwitch(org.type as UserRole, org)}
                           className={`w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 ${
                             currentOrganization?.id === org.id ? 'bg-yellow-50 text-yellow-800' : 'text-slate-700'
                           }`}
