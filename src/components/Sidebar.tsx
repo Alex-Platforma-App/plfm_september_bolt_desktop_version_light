@@ -154,7 +154,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSectio
   ];
 
   const personalItems = [
-    { id: 'my-dashboard', label: 'My Dashboard', icon: <User className="w-5 h-5" />, path: '/dashboard', section: 'personal' }
+    { id: 'my-dashboard', label: 'My Dashboard', icon: <User className="w-5 h-5" />, path: '/dashboard', section: 'personal' },
     { id: 'my-public-profile', label: 'My Public Profile', icon: <User className="w-5 h-5" />, path: '/my-public-profile', section: 'personal' }
   ];
 
