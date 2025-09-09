@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Package, Globe, TrendingUp, Heart, Shield } from 'lucide-react';
+import { Users, Package, Globe, TrendingUp, Heart, Shield, CheckCircle, MapPin, Activity, Eye } from 'lucide-react';
 import { OverviewCard } from '../ui/OverviewCard';
 
 export const HomeDashboard: React.FC = () => {
@@ -28,80 +28,133 @@ export const HomeDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Platform Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <OverviewCard
-          title="Active Organizations"
-          value="247"
-          subtitle="Nonprofits & Suppliers"
-          icon={<Users className="w-6 h-6" />}
-          color="blue"
-          trend={{ value: 12, isPositive: true }}
-        />
-        <OverviewCard
-          title="Available Products"
-          value="15,342"
-          subtitle="Across all catalogs"
-          icon={<Package className="w-6 h-6" />}
-          color="green"
-          trend={{ value: 8, isPositive: true }}
-        />
-        <OverviewCard
-          title="Global Reach"
-          value="23"
-          subtitle="Countries served"
-          icon={<Globe className="w-6 h-6" />}
-          color="purple"
-        />
+      {/* Platform Metrics */}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Platform Metrics</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <OverviewCard
+            title="Requests Fulfilled"
+            value="287"
+            subtitle="recipient requests completed this month"
+            icon={<CheckCircle className="w-6 h-6" />}
+            color="green"
+            trend={{ value: 15, isPositive: true }}
+          />
+          <OverviewCard
+            title="Items Listed"
+            value="15,634"
+            subtitle="items available across all catalogs"
+            icon={<Package className="w-6 h-6" />}
+            color="blue"
+            trend={{ value: 8, isPositive: true }}
+          />
+          <OverviewCard
+            title="Active Organizations"
+            value="231"
+            subtitle="142 verified nonprofits, 89 suppliers"
+            icon={<Users className="w-6 h-6" />}
+            color="purple"
+            trend={{ value: 12, isPositive: true }}
+          />
+          <OverviewCard
+            title="Platform Users"
+            value="1,247"
+            subtitle="registered users this quarter"
+            icon={<Globe className="w-6 h-6" />}
+            color="orange"
+            trend={{ value: 22, isPositive: true }}
+          />
+        </div>
       </div>
 
-      {/* Featured Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center space-x-2 mb-4">
-            <Heart className="w-5 h-5 text-red-500" />
-            <h3 className="text-lg font-semibold text-slate-900">Urgent Needs</h3>
-          </div>
-          <div className="space-y-4">
-            <div className="border-l-4 border-red-400 pl-4">
-              <h4 className="font-medium text-slate-900">Kyiv Emergency Medical Supplies</h4>
-              <p className="text-sm text-slate-600">Critical trauma equipment needed for 3 hospitals</p>
-              <p className="text-xs text-slate-500">Updated 2 hours ago</p>
-            </div>
-            <div className="border-l-4 border-orange-400 pl-4">
-              <h4 className="font-medium text-slate-900">Lviv Children's Winter Clothing</h4>
-              <p className="text-sm text-slate-600">Warm clothing for 200+ displaced children</p>
-              <p className="text-xs text-slate-500">Updated 4 hours ago</p>
-            </div>
-            <div className="border-l-4 border-yellow-400 pl-4">
-              <h4 className="font-medium text-slate-900">Kharkiv Educational Materials</h4>
-              <p className="text-sm text-slate-600">School supplies for rebuilt classrooms</p>
-              <p className="text-xs text-slate-500">Updated 1 day ago</p>
-            </div>
-          </div>
+      {/* Activity Intelligence */}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Activity Intelligence</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <OverviewCard
+            title="Recent Fulfillments"
+            value="12"
+            subtitle="requests marked as delivered today"
+            icon={<TrendingUp className="w-6 h-6" />}
+            color="green"
+          />
+          <OverviewCard
+            title="New Requests"
+            value="23"
+            subtitle="new items added to wishlists this week"
+            icon={<Heart className="w-6 h-6" />}
+            color="red"
+          />
+          <OverviewCard
+            title="New Catalog Items"
+            value="156"
+            subtitle="new items added to catalogs this week"
+            icon={<Package className="w-6 h-6" />}
+            color="blue"
+          />
+          <OverviewCard
+            title="Geographic Activity"
+            value="18"
+            subtitle="active deliveries in oblasts"
+            icon={<MapPin className="w-6 h-6" />}
+            color="purple"
+          />
         </div>
+      </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center space-x-2 mb-4">
-            <TrendingUp className="w-5 h-5 text-green-500" />
-            <h3 className="text-lg font-semibold text-slate-900">Platform Impact</h3>
+      {/* Discovery Features */}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Discovery Features</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <div className="flex items-center space-x-3 mb-3">
+              <Activity className="w-6 h-6 text-blue-600" />
+              <h3 className="font-semibold text-gray-900">Most Requested Items</h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-3">Top priority items across all wishlists</p>
+            <div className="space-y-2">
+              <div className="text-sm text-gray-700">• Medical supplies</div>
+              <div className="text-sm text-gray-700">• Winter clothing</div>
+              <div className="text-sm text-gray-700">• Hygiene kits</div>
+            </div>
           </div>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-slate-600">Aid Coordinated This Month</span>
-              <span className="font-semibold text-slate-900">$247,500</span>
+
+          <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <div className="flex items-center space-x-3 mb-3">
+              <Users className="w-6 h-6 text-green-600" />
+              <h3 className="font-semibold text-gray-900">Active Organizations</h3>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-slate-600">People Helped</span>
-              <span className="font-semibold text-slate-900">2,847</span>
+            <p className="text-sm text-gray-600 mb-3">Organizations with recent catalog updates</p>
+            <div className="space-y-2">
+              <div className="text-sm text-gray-700">• 45 updated this week</div>
+              <div className="text-sm text-gray-700">• 12 new organizations</div>
+              <div className="text-sm text-gray-700">• 98% verified status</div>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-slate-600">Delivery Success Rate</span>
-              <span className="font-semibold text-green-600">97.3%</span>
+          </div>
+
+          <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <div className="flex items-center space-x-3 mb-3">
+              <Heart className="w-6 h-6 text-red-600" />
+              <h3 className="font-semibold text-gray-900">Recent Wishlist Updates</h3>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-slate-600">Response Time</span>
-              <span className="font-semibold text-slate-900">&lt; 24 hours</span>
+            <p className="text-sm text-gray-600 mb-3">New public wishlists added</p>
+            <div className="space-y-2">
+              <div className="text-sm text-gray-700">• 34 new wishlists</div>
+              <div className="text-sm text-gray-700">• 156 items requested</div>
+              <div className="text-sm text-gray-700">• 8 urgent priorities</div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <div className="flex items-center space-x-3 mb-3">
+              <Package className="w-6 h-6 text-purple-600" />
+              <h3 className="font-semibold text-gray-900">Available Categories</h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-3">Top catalog categories with item counts</p>
+            <div className="space-y-2">
+              <div className="text-sm text-gray-700">• Medical: 4,567 items</div>
+              <div className="text-sm text-gray-700">• Emergency: 2,890 items</div>
+              <div className="text-sm text-gray-700">• Food: 1,234 items</div>
             </div>
           </div>
         </div>

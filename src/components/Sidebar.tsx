@@ -76,7 +76,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSectio
           <nav className="flex-1 px-3 py-4 space-y-6">
             {!sidebarCollapsed && (
               <div className="px-3 mb-3">
-                <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
                   Nonprofit Operations
                 </h3>
               </div>
@@ -119,7 +119,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSectio
           <nav className="flex-1 px-3 py-4 space-y-6">
             {!sidebarCollapsed && (
               <div className="px-3 mb-3">
-                <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
                   Supplier Operations
                 </h3>
               </div>
@@ -185,13 +185,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSectio
     }`}>
       <div className="h-full flex flex-col overflow-y-auto">
         <nav className="flex-1 px-3 py-4 space-y-6">
-          {/* Universal Section */}
+          {/* Universal BROWSE Section */}
           <div>
             {!sidebarCollapsed && (
               <div className="px-3 mb-3">
-                <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  Browse
-                </h3>
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className="flex-1 h-px bg-gray-300"></div>
+                  <h3 className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+                    BROWSE
+                  </h3>
+                  <div className="flex-1 h-px bg-gray-300"></div>
+                </div>
               </div>
             )}
             <ul className="space-y-1">
@@ -204,9 +208,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSectio
             <div>
               {!sidebarCollapsed && (
                 <div className="px-3 mb-3">
-                  <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Personal
-                  </h3>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className="flex-1 h-px bg-gray-300"></div>
+                    <h3 className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+                      PERSONAL
+                    </h3>
+                    <div className="flex-1 h-px bg-gray-300"></div>
+                  </div>
                 </div>
               )}
               <ul className="space-y-1">
@@ -220,7 +228,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSectio
             <div>
               {!sidebarCollapsed && (
                 <div className="px-3 mb-3">
-                  <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
                     Donor
                   </h3>
                 </div>
@@ -237,7 +245,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSectio
             <div>
               {!sidebarCollapsed && (
                 <div className="px-3 mb-3">
-                  <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
                     Recipient
                   </h3>
                 </div>
