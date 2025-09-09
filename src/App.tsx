@@ -32,6 +32,7 @@ import { SupplierDocuments } from './components/dashboards/SupplierDocuments';
 import { SupplierOrders } from './components/dashboards/SupplierOrders';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { DonorHistory } from './components/dashboards/DonorHistory';
+import { MyPublicProfile } from './components/Profile/MyPublicProfile';
 
 const AppContent: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -129,6 +130,10 @@ const AppContent: React.FC = () => {
       case 'orders':
         return (
           <SupplierOrders />
+        );
+      case 'my-public-profile':
+        return (
+          <MyPublicProfile />
         );
       default:
         return <HomeDashboard />;

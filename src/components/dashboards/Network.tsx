@@ -318,7 +318,7 @@ export const Network: React.FC = () => {
 
               <div className="flex space-x-2">
                 <button className="flex-1 py-2 px-4 rounded-lg font-medium transition-colors bg-blue-600 hover:bg-blue-700 text-white">
-                  Connect
+                  {org.type === 'Nonprofit' || org.type === 'Supplier' ? 'Follow' : 'Connect'}
                 </button>
                 <button className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50">
                   View Profile
