@@ -202,34 +202,30 @@ export const MyPublicProfile: React.FC = () => {
   );
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="space-y-6">
       {/* Profile Header */}
-      <div className={`rounded-xl border p-8 ${
+      <div className={`rounded-xl p-8 border ${
         theme === 'dark' 
           ? 'bg-slate-800 border-slate-700' 
           : 'bg-white border-gray-200'
       }`}>
-        {/* Top Section with Edit Button */}
-        <div className="flex justify-between items-start mb-6">
-          <div className="flex items-start space-x-6">
-            {/* Professional Profile Image */}
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center text-white text-4xl font-bold shadow-lg border-4 border-red-200 dark:border-red-800">
+        <div className="flex items-start justify-between">
+          <div className="flex items-center space-x-6">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center text-white text-4xl font-bold shadow-lg border-4 border-red-200 dark:border-red-800">
               {userData.profileImage ? (
                 <img src={userData.profileImage} alt={userData.name} className="w-full h-full rounded-full object-cover" />
               ) : (
-                <Stethoscope className="w-16 h-16" />
+                <Stethoscope className="w-12 h-12" />
               )}
             </div>
-
-            {/* Profile Info */}
-            <div className="flex-1">
-              <div className="flex items-center space-x-2 mb-2">
+            <div>
+              <div className="flex items-center space-x-3 mb-2">
                 <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                   {userData.name}
                 </h1>
                 {userData.verified && (
                   <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm">✓</span>
+                    <span className="text-white text-xs">✓</span>
                   </div>
                 )}
                 {userData.medicalVerified && (
@@ -254,7 +250,6 @@ export const MyPublicProfile: React.FC = () => {
                 {userData.bio}
               </p>
 
-              {/* Location and Join Date */}
               <div className="flex items-center space-x-4 text-sm">
                 <div className="flex items-center space-x-1">
                   <MapPin className={`w-4 h-4 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`} />
@@ -271,8 +266,6 @@ export const MyPublicProfile: React.FC = () => {
               </div>
             </div>
           </div>
-
-          {/* Edit Profile Button */}
           <button
             onClick={handleEditProfile}
             className={`flex items-center space-x-2 px-6 py-2 rounded-full border font-medium transition-colors ${
@@ -287,7 +280,7 @@ export const MyPublicProfile: React.FC = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="flex items-center space-x-6 mb-6">
+        <div className="flex items-center space-x-6 mt-6 mb-6">
           <button
             onClick={() => setShowFollowingModal(true)}
             className={`hover:underline ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}
@@ -349,7 +342,7 @@ export const MyPublicProfile: React.FC = () => {
       </div>
 
       {/* Recent Professional Activity */}
-      <div className={`mt-6 rounded-xl border p-6 ${
+      <div className={`rounded-xl p-6 border ${
         theme === 'dark' 
           ? 'bg-slate-800 border-slate-700' 
           : 'bg-white border-gray-200'
@@ -375,7 +368,7 @@ export const MyPublicProfile: React.FC = () => {
       </div>
 
       {/* Professional Context */}
-      <div className={`mt-6 rounded-xl border p-6 ${
+      <div className={`rounded-xl p-6 border ${
         theme === 'dark' 
           ? 'bg-slate-800 border-slate-700' 
           : 'bg-white border-gray-200'
