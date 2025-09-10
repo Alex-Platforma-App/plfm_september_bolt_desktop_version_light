@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Calendar, ExternalLink, Edit, Users, Heart, Gift, Settings } from 'lucide-react';
+import { MapPin, Calendar, ExternalLink, Edit, Users, Heart, MessageCircle, Share2, Stethoscope, Shield, Truck, Activity } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 
 export const MyPublicProfile: React.FC = () => {
@@ -7,66 +7,96 @@ export const MyPublicProfile: React.FC = () => {
   const [showFollowersModal, setShowFollowersModal] = useState(false);
   const [showFollowingModal, setShowFollowingModal] = useState(false);
 
-  // Mock user data - this would come from context/API in real app
+  // Dr. Oksana Marchenko - Medical Evacuation Specialist Profile
   const userData = {
-    id: 'oleksandr-p-kyiv',
-    name: 'Oleksandr Petrenko',
-    username: '@oleksandr_p',
-    bio: 'Humanitarian aid donor supporting medical initiatives across Ukraine. Passionate about making a difference in communities affected by conflict. 🇺🇦 #HumanitarianAid',
-    location: 'Kyiv, Ukraine',
-    joinDate: 'March 2023',
+    id: 'dr-oksana-marchenko-kharkiv',
+    name: 'Dr. Oksana Marchenko',
+    username: '@dr_oksana_m',
+    bio: 'Emergency medic specializing in battlefield medical evacuation. Working with mobile medical units across eastern Ukraine. Regularly coordinating medical supply deliveries for frontline healthcare. 🚑🇺🇦',
+    location: 'Kharkiv, Ukraine',
+    joinDate: 'March 2022',
     verified: true,
-    profileImage: null, // Would be actual image URL
-    followers: 156,
+    medicalVerified: true,
+    profileImage: null, // Would be professional medical photo
+    followers: 234,
     following: 89,
-    role: 'Donor',
+    role: 'Recipient',
+    specialization: 'Medical Evacuation Specialist',
     settings: {
-      showDonationsButton: true,
-      showWishlistButton: false,
+      showWishlistButton: true,
+      showDonationsButton: false,
       isPublic: true
     },
     socialLinks: {
-      facebook: 'https://facebook.com/oleksandr.p',
-      twitter: 'https://twitter.com/oleksandr_p',
-      linkedin: 'https://linkedin.com/in/oleksandr-petrenko',
-      telegram: '@oleksandr_p'
+      telegram: '@dr_oksana_medical',
+      linkedin: 'https://linkedin.com/in/dr-oksana-marchenko',
+      facebook: 'https://facebook.com/dr.oksana.marchenko'
     }
   };
 
+  // Medical professionals, organizations, and donors who follow her
   const followers = [
-    { id: '1', name: 'Yana Kovalenko', username: '@yana_k', role: 'Nonprofit Admin', verified: true },
-    { id: '2', name: 'Dmitri Shevchenko', username: '@dmitri_s', role: 'Supplier', verified: true },
-    { id: '3', name: 'Lesia Marchenko', username: '@lesia_m', role: 'Recipient', verified: false },
-    { id: '4', name: 'Viktor Romanov', username: '@viktor_r', role: 'Volunteer', verified: true },
-    { id: '5', name: 'Ukrainian Red Cross', username: '@redcross_ua', role: 'Organization', verified: true }
+    { id: '1', name: 'Ukrainian Red Cross', username: '@redcross_ua', role: 'Organization', verified: true },
+    { id: '2', name: 'Dr. Andriy Kovalenko', username: '@dr_andriy_k', role: 'Medical Professional', verified: true },
+    { id: '3', name: 'MedSupply Ukraine', username: '@medsupply_ua', role: 'Supplier', verified: true },
+    { id: '4', name: 'Oleksandr P.', username: '@oleksandr_p', role: 'Donor', verified: false },
+    { id: '5', name: 'Kharkiv Medical Center', username: '@kharkiv_medical', role: 'Organization', verified: true },
+    { id: '6', name: 'Dr. Lesia Bondarenko', username: '@dr_lesia_b', role: 'Medical Professional', verified: true },
+    { id: '7', name: 'Emergency Aid International', username: '@emergency_aid_intl', role: 'Organization', verified: true },
+    { id: '8', name: 'Viktor R.', username: '@viktor_volunteer', role: 'Volunteer', verified: false }
   ];
 
+  // Medical organizations and suppliers she follows
   const following = [
-    { id: '1', name: 'MedSupply Ukraine', username: '@medsupply_ua', role: 'Organization', verified: true },
-    { id: '2', name: 'Caritas Ukraine', username: '@caritas_ua', role: 'Organization', verified: true },
-    { id: '3', name: 'UNICEF Ukraine', username: '@unicef_ua', role: 'Organization', verified: true }
+    { id: '1', name: 'Médecins Sans Frontières', username: '@msf_ukraine', role: 'Organization', verified: true },
+    { id: '2', name: 'WHO Ukraine', username: '@who_ukraine', role: 'Organization', verified: true },
+    { id: '3', name: 'MedSupply Europe', username: '@medsupply_europe', role: 'Supplier', verified: true },
+    { id: '4', name: 'Ukrainian Medical Association', username: '@uma_ukraine', role: 'Organization', verified: true },
+    { id: '5', name: 'Emergency Medical Services', username: '@ems_ukraine', role: 'Organization', verified: true }
+  ];
+
+  // Recent professional activity
+  const recentActivity = [
+    { type: 'wishlist', description: 'Updated medical supply wishlist - urgent need for trauma kits', date: '6 hours ago' },
+    { type: 'request', description: 'Submitted request for portable defibrillators to Ukrainian Red Cross', date: '2 days ago' },
+    { type: 'delivery', description: 'Confirmed receipt of emergency medical supplies from MedSupply Europe', date: '4 days ago' },
+    { type: 'follow', description: 'Started following Emergency Medical Services Ukraine', date: '1 week ago' }
   ];
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
-      case 'Donor':
-        return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400';
-      case 'Nonprofit Admin':
+      case 'Medical Professional':
+        return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400';
+      case 'Organization':
         return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400';
       case 'Supplier':
         return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400';
-      case 'Recipient':
+      case 'Donor':
+        return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400';
+      case 'Volunteer':
         return 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400';
-      case 'Organization':
-        return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400';
       default:
         return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
     }
   };
 
   const handleEditProfile = () => {
-    // This would navigate to edit profile page or open modal
     console.log('Edit profile clicked');
+  };
+
+  const getActivityIcon = (type: string) => {
+    switch (type) {
+      case 'wishlist':
+        return <Heart className="w-4 h-4 text-red-500" />;
+      case 'request':
+        return <Activity className="w-4 h-4 text-blue-500" />;
+      case 'delivery':
+        return <Truck className="w-4 h-4 text-green-500" />;
+      case 'follow':
+        return <Users className="w-4 h-4 text-purple-500" />;
+      default:
+        return <Activity className="w-4 h-4 text-gray-500" />;
+    }
   };
 
   const FollowersModal = () => (
@@ -89,8 +119,8 @@ export const MyPublicProfile: React.FC = () => {
           {followers.map((follower) => (
             <div key={follower.id} className="flex items-center justify-between py-3">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center">
-                  <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                  <span className={`text-sm font-medium ${theme === 'dark' ? 'text-red-400' : 'text-red-700'}`}>
                     {follower.name.charAt(0)}
                   </span>
                 </div>
@@ -140,8 +170,8 @@ export const MyPublicProfile: React.FC = () => {
           {following.map((followed) => (
             <div key={followed.id} className="flex items-center justify-between py-3">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center">
-                  <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                  <span className={`text-sm font-medium ${theme === 'dark' ? 'text-blue-400' : 'text-blue-700'}`}>
                     {followed.name.charAt(0)}
                   </span>
                 </div>
@@ -182,12 +212,12 @@ export const MyPublicProfile: React.FC = () => {
         {/* Top Section with Edit Button */}
         <div className="flex justify-between items-start mb-6">
           <div className="flex items-start space-x-6">
-            {/* Profile Image */}
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-white text-4xl font-bold shadow-lg">
+            {/* Professional Profile Image */}
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center text-white text-4xl font-bold shadow-lg border-4 border-red-200 dark:border-red-800">
               {userData.profileImage ? (
                 <img src={userData.profileImage} alt={userData.name} className="w-full h-full rounded-full object-cover" />
               ) : (
-                userData.name.charAt(0)
+                <Stethoscope className="w-16 h-16" />
               )}
             </div>
 
@@ -202,13 +232,22 @@ export const MyPublicProfile: React.FC = () => {
                     <span className="text-white text-sm">✓</span>
                   </div>
                 )}
-                <span className={`px-3 py-1 text-sm rounded-full ${getRoleBadgeColor(userData.role)}`}>
+                {userData.medicalVerified && (
+                  <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
+                    <Shield className="w-4 h-4 text-white" />
+                  </div>
+                )}
+                <span className="px-3 py-1 text-sm rounded-full bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400">
                   {userData.role}
                 </span>
               </div>
               
-              <p className={`text-lg mb-3 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+              <p className={`text-lg mb-2 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
                 {userData.username}
+              </p>
+
+              <p className={`text-sm font-medium mb-3 ${theme === 'dark' ? 'text-red-400' : 'text-red-600'}`}>
+                {userData.specialization}
               </p>
 
               <p className={`text-base leading-relaxed mb-4 ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
@@ -269,27 +308,21 @@ export const MyPublicProfile: React.FC = () => {
           </button>
         </div>
 
-        {/* Role-Specific Buttons */}
-        <div className="flex space-x-3 mb-6">
-          {userData.settings.showDonationsButton && userData.role === 'Donor' && (
-            <button className="bg-yellow-400 hover:bg-yellow-500 text-slate-900 px-6 py-2 rounded-full font-medium transition-colors flex items-center space-x-2">
-              <Gift className="w-4 h-4" />
-              <span>View My Donations</span>
+        {/* Primary CTA - View My Wishlist */}
+        {userData.settings.showWishlistButton && (
+          <div className="mb-6">
+            <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-medium transition-colors flex items-center space-x-2 text-lg">
+              <Heart className="w-5 h-5" />
+              <span>View My Medical Supply Wishlist</span>
             </button>
-          )}
-          {userData.settings.showWishlistButton && userData.role === 'Recipient' && (
-            <button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full font-medium transition-colors flex items-center space-x-2">
-              <Heart className="w-4 h-4" />
-              <span>View My Wishlist</span>
-            </button>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Social Links */}
         {Object.entries(userData.socialLinks).some(([_, url]) => url) && (
           <div>
             <h3 className={`text-lg font-semibold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-              Connect
+              Professional Contact
             </h3>
             <div className="flex flex-wrap gap-3">
               {Object.entries(userData.socialLinks).map(([platform, url]) => (
@@ -315,42 +348,57 @@ export const MyPublicProfile: React.FC = () => {
         )}
       </div>
 
-      {/* Recent Activity Section */}
+      {/* Recent Professional Activity */}
       <div className={`mt-6 rounded-xl border p-6 ${
         theme === 'dark' 
           ? 'bg-slate-800 border-slate-700' 
           : 'bg-white border-gray-200'
       }`}>
         <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-          Recent Activity
+          Recent Medical Supply Activity
         </h3>
         <div className="space-y-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-2 bg-green-500 rounded-full" />
-            <span className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
-              Donated medical supplies to Kharkiv Regional Hospital
-            </span>
-            <span className={`text-xs ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`}>
-              2 days ago
-            </span>
+          {recentActivity.map((activity, index) => (
+            <div key={index} className="flex items-center space-x-3">
+              {getActivityIcon(activity.type)}
+              <div className="flex-1">
+                <span className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
+                  {activity.description}
+                </span>
+                <span className={`text-xs ml-2 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`}>
+                  {activity.date}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Professional Context */}
+      <div className={`mt-6 rounded-xl border p-6 ${
+        theme === 'dark' 
+          ? 'bg-slate-800 border-slate-700' 
+          : 'bg-white border-gray-200'
+      }`}>
+        <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+          Medical Professional Information
+        </h3>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <h4 className={`font-medium mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Specialization
+            </h4>
+            <p className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
+              Emergency Medical Evacuation, Trauma Care, Mobile Medical Units
+            </p>
           </div>
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-2 bg-blue-500 rounded-full" />
-            <span className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
-              Started following MedSupply Ukraine
-            </span>
-            <span className={`text-xs ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`}>
-              1 week ago
-            </span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-2 bg-yellow-500 rounded-full" />
-            <span className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
-              Shared Emergency Medical Center wishlist
-            </span>
-            <span className={`text-xs ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`}>
-              2 weeks ago
-            </span>
+          <div>
+            <h4 className={`font-medium mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Service Area
+            </h4>
+            <p className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
+              Eastern Ukraine, Kharkiv Oblast, Frontline Medical Support
+            </p>
           </div>
         </div>
       </div>
