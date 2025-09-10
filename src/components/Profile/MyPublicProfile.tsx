@@ -1,106 +1,51 @@
 import React, { useState } from 'react';
-import { Camera, Copy, QrCode, Share2, Users, Eye, EyeOff, Save, Upload, X } from 'lucide-react';
+import { MapPin, Calendar, ExternalLink, Edit, Users, Heart, Gift, Settings } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 
 export const MyPublicProfile: React.FC = () => {
   const { theme } = useTheme();
-  const [activeTab, setActiveTab] = useState('edit'); // 'edit', 'followers', 'following'
-  
-  const gradientStyle = {
-    background: theme === 'dark' 
-      ? 'linear-gradient(135deg, #171c29 0%, #1a1f2e 33%, #1f2535 66%, #252b3d 100%)'
-      : 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 33%, #f1f3f4 66%, #e5e7eb 100%)'
-  };
+  const [showFollowersModal, setShowFollowersModal] = useState(false);
+  const [showFollowingModal, setShowFollowingModal] = useState(false);
 
-  // Profile form state
-  const [profileData, setProfileData] = useState({
+  // Mock user data - this would come from context/API in real app
+  const userData = {
+    id: 'oleksandr-p-kyiv',
     name: 'Oleksandr Petrenko',
-    location: 'Kyiv',
-    bio: 'Humanitarian aid donor supporting medical initiatives across Ukraine. Passionate about making a difference in communities affected by conflict.',
-    profileImage: null as File | null,
+    username: '@oleksandr_p',
+    bio: 'Humanitarian aid donor supporting medical initiatives across Ukraine. Passionate about making a difference in communities affected by conflict. 🇺🇦 #HumanitarianAid',
+    location: 'Kyiv, Ukraine',
+    joinDate: 'March 2023',
+    verified: true,
+    profileImage: null, // Would be actual image URL
+    followers: 156,
+    following: 89,
+    role: 'Donor',
+    settings: {
+      showDonationsButton: true,
+      showWishlistButton: false,
+      isPublic: true
+    },
     socialLinks: {
       facebook: 'https://facebook.com/oleksandr.p',
       twitter: 'https://twitter.com/oleksandr_p',
-      instagram: '',
       linkedin: 'https://linkedin.com/in/oleksandr-petrenko',
       telegram: '@oleksandr_p'
-    },
-    isPublic: true,
-    showWishlistButton: true,
-    showDonationsButton: true
-  });
+    }
+  };
 
-  const [bioCharCount, setBioCharCount] = useState(profileData.bio.length);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [copySuccess, setCopySuccess] = useState(false);
-
-  const ukrainianCities = [
-    'Kyiv', 'Lviv', 'Kharkiv', 'Odesa', 'Dnipro', 'Poltava', 'Chernivtsi', 
-    'Zaporizhzhia', 'Vinnytsia', 'Cherkasy', 'Sumy', 'Zhytomyr'
-  ];
-
-  // Mock followers data
   const followers = [
-    { id: '1', name: 'Yana Kovalenko', location: 'Lviv', role: 'Nonprofit Admin', followers: 78, verified: true },
-    { id: '2', name: 'Dmitri Shevchenko', location: 'Kharkiv', role: 'Supplier', followers: 32, verified: true },
-    { id: '3', name: 'Lesia Marchenko', location: 'Odesa', role: 'Recipient', followers: 12, verified: false },
-    { id: '4', name: 'Viktor Romanov', location: 'Dnipro', role: 'Volunteer', followers: 56, verified: true },
-    { id: '5', name: 'Natalia Fedorenko', location: 'Poltava', role: 'Coordinator', followers: 34, verified: true },
-    { id: '6', name: 'Ukrainian Red Cross', location: 'Kyiv', role: 'Organization', followers: 234, verified: true },
-    { id: '7', name: 'Andriy Bondarenko', location: 'Chernivtsi', role: 'Donor', followers: 23, verified: false },
-    { id: '8', name: 'Maryna Tkachenko', location: 'Zaporizhzhia', role: 'Recipient', followers: 8, verified: false }
+    { id: '1', name: 'Yana Kovalenko', username: '@yana_k', role: 'Nonprofit Admin', verified: true },
+    { id: '2', name: 'Dmitri Shevchenko', username: '@dmitri_s', role: 'Supplier', verified: true },
+    { id: '3', name: 'Lesia Marchenko', username: '@lesia_m', role: 'Recipient', verified: false },
+    { id: '4', name: 'Viktor Romanov', username: '@viktor_r', role: 'Volunteer', verified: true },
+    { id: '5', name: 'Ukrainian Red Cross', username: '@redcross_ua', role: 'Organization', verified: true }
   ];
 
   const following = [
-    { id: '1', name: 'MedSupply Ukraine', location: 'Kyiv', role: 'Organization', followers: 156, verified: true },
-    { id: '2', name: 'Caritas Ukraine', location: 'Lviv', role: 'Organization', followers: 89, verified: true },
-    { id: '3', name: 'Ihor Petrenko', location: 'Kharkiv', role: 'Nonprofit Admin', followers: 45, verified: true },
-    { id: '4', name: 'Sofia Kovalchuk', location: 'Odesa', role: 'Volunteer', followers: 67, verified: false },
-    { id: '5', name: 'UNICEF Ukraine', location: 'Multiple', role: 'Organization', followers: 445, verified: true }
+    { id: '1', name: 'MedSupply Ukraine', username: '@medsupply_ua', role: 'Organization', verified: true },
+    { id: '2', name: 'Caritas Ukraine', username: '@caritas_ua', role: 'Organization', verified: true },
+    { id: '3', name: 'UNICEF Ukraine', username: '@unicef_ua', role: 'Organization', verified: true }
   ];
-
-  const handleInputChange = (field: string, value: string) => {
-    if (field === 'bio') {
-      if (value.length <= 500) {
-        setProfileData(prev => ({ ...prev, [field]: value }));
-        setBioCharCount(value.length);
-      }
-    } else {
-      setProfileData(prev => ({ ...prev, [field]: value }));
-    }
-  };
-
-  const handleSocialLinkChange = (platform: string, value: string) => {
-    setProfileData(prev => ({
-      ...prev,
-      socialLinks: { ...prev.socialLinks, [platform]: value }
-    }));
-  };
-
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      if (file.size > 8 * 1024 * 1024) {
-        alert('File size must be less than 8MB');
-        return;
-      }
-      if (!['image/jpeg', 'image/png'].includes(file.type)) {
-        alert('Only JPEG and PNG files are supported');
-        return;
-      }
-      setProfileData(prev => ({ ...prev, profileImage: file }));
-      const reader = new FileReader();
-      reader.onload = (e) => setImagePreview(e.target?.result as string);
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const copyProfileLink = () => {
-    const profileUrl = `https://platforma.org/profile/oleksandr-p-kyiv`;
-    navigator.clipboard.writeText(profileUrl);
-    setCopySuccess(true);
-    setTimeout(() => setCopySuccess(false), 2000);
-  };
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
@@ -112,10 +57,6 @@ export const MyPublicProfile: React.FC = () => {
         return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400';
       case 'Recipient':
         return 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400';
-      case 'Volunteer':
-        return 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400';
-      case 'Coordinator':
-        return 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400';
       case 'Organization':
         return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400';
       default:
@@ -123,397 +64,300 @@ export const MyPublicProfile: React.FC = () => {
     }
   };
 
-  return (
-    <div className="space-y-6">
-      <div>
-        <h2 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-          My Public Profile
-        </h2>
-        <p className={`${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-          Manage your public profile and privacy settings
-        </p>
-      </div>
+  const handleEditProfile = () => {
+    // This would navigate to edit profile page or open modal
+    console.log('Edit profile clicked');
+  };
 
-      {/* Tab Navigation */}
-      <div className="flex space-x-1 bg-gray-100 dark:bg-slate-800 rounded-lg p-1">
-        <button
-          onClick={() => setActiveTab('edit')}
-          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-            activeTab === 'edit'
-              ? 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm'
-              : 'text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
-          }`}
-        >
-          Edit Profile
-        </button>
-        <button
-          onClick={() => setActiveTab('followers')}
-          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-            activeTab === 'followers'
-              ? 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm'
-              : 'text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
-          }`}
-        >
-          Followers ({followers.length})
-        </button>
-        <button
-          onClick={() => setActiveTab('following')}
-          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-            activeTab === 'following'
-              ? 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm'
-              : 'text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
-          }`}
-        >
-          Following ({following.length})
-        </button>
-      </div>
-
-      {/* Edit Profile Tab */}
-      {activeTab === 'edit' && (
-        <div className="space-y-6">
-          {/* Privacy Controls */}
-          <div 
-            style={gradientStyle}
-            className={`rounded-xl p-6 border ${
-              theme === 'dark' ? 'border-slate-700' : 'border-gray-200'
-            }`}
+  const FollowersModal = () => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className={`w-full max-w-md mx-4 rounded-xl shadow-xl ${
+        theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+      }`}>
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-slate-600">
+          <h3 className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            Followers
+          </h3>
+          <button
+            onClick={() => setShowFollowersModal(false)}
+            className={`text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200`}
           >
-            <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-              Privacy Settings
-            </h3>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                    Public Profile
-                  </div>
-                  <div className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-                    {profileData.isPublic 
-                      ? 'Your profile appears in search results and Network directory'
-                      : 'Your profile is hidden from all searches and directories'
-                    }
-                  </div>
+            ✕
+          </button>
+        </div>
+        <div className="max-h-96 overflow-y-auto p-4">
+          {followers.map((follower) => (
+            <div key={follower.id} className="flex items-center justify-between py-3">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center">
+                  <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    {follower.name.charAt(0)}
+                  </span>
                 </div>
-                <button
-                  onClick={() => setProfileData(prev => ({ ...prev, isPublic: !prev.isPublic }))}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                    profileData.isPublic ? 'bg-blue-600' : 'bg-gray-300 dark:bg-slate-600'
-                  }`}
-                >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                      profileData.isPublic ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="flex items-center justify-between">
                 <div>
-                  <div className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                    Show "My Donations" Button
-                  </div>
-                  <div className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-                    Display donation history button on your profile
-                  </div>
-                </div>
-                <button
-                  onClick={() => setProfileData(prev => ({ ...prev, showDonationsButton: !prev.showDonationsButton }))}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                    profileData.showDonationsButton ? 'bg-blue-600' : 'bg-gray-300 dark:bg-slate-600'
-                  }`}
-                >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                      profileData.showDonationsButton ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Profile Form */}
-          <div 
-            style={gradientStyle}
-            className={`rounded-xl p-6 border ${
-              theme === 'dark' ? 'border-slate-700' : 'border-gray-200'
-            }`}
-          >
-            <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-              Profile Information
-            </h3>
-            
-            <div className="space-y-4">
-              {/* Profile Image */}
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  Profile Image
-                </label>
-                <div className="flex items-center space-x-4">
-                  <div className="w-20 h-20 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
-                    {imagePreview ? (
-                      <img src={imagePreview} alt="Profile" className="w-full h-full object-cover" />
-                    ) : (
-                      <Camera className={`w-8 h-8 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-400'}`} />
+                  <div className="flex items-center space-x-1">
+                    <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                      {follower.name}
+                    </span>
+                    {follower.verified && (
+                      <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs">✓</span>
+                      </div>
                     )}
                   </div>
-                  <div>
-                    <input
-                      type="file"
-                      accept="image/jpeg,image/png"
-                      onChange={handleImageUpload}
-                      className="hidden"
-                      id="profile-image"
-                    />
-                    <label
-                      htmlFor="profile-image"
-                      className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                    >
-                      Upload Image
-                    </label>
-                    <p className={`text-xs mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-                      JPEG or PNG, max 8MB
-                    </p>
+                  <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+                    {follower.username}
+                  </span>
+                </div>
+              </div>
+              <span className={`px-2 py-1 text-xs rounded-full ${getRoleBadgeColor(follower.role)}`}>
+                {follower.role}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const FollowingModal = () => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className={`w-full max-w-md mx-4 rounded-xl shadow-xl ${
+        theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+      }`}>
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-slate-600">
+          <h3 className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            Following
+          </h3>
+          <button
+            onClick={() => setShowFollowingModal(false)}
+            className={`text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200`}
+          >
+            ✕
+          </button>
+        </div>
+        <div className="max-h-96 overflow-y-auto p-4">
+          {following.map((followed) => (
+            <div key={followed.id} className="flex items-center justify-between py-3">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center">
+                  <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    {followed.name.charAt(0)}
+                  </span>
+                </div>
+                <div>
+                  <div className="flex items-center space-x-1">
+                    <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                      {followed.name}
+                    </span>
+                    {followed.verified && (
+                      <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs">✓</span>
+                      </div>
+                    )}
                   </div>
+                  <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+                    {followed.username}
+                  </span>
                 </div>
               </div>
+              <span className={`px-2 py-1 text-xs rounded-full ${getRoleBadgeColor(followed.role)}`}>
+                {followed.role}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
-              {/* Name */}
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  value={profileData.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
-                  className={`w-full px-3 py-2 rounded-lg border ${
-                    theme === 'dark'
-                      ? 'bg-slate-800 border-slate-600 text-white'
-                      : 'bg-white border-gray-300 text-gray-900'
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                  placeholder="Enter your full name"
-                  required
-                />
-              </div>
-
-              {/* Location */}
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  Location
-                </label>
-                <select
-                  value={profileData.location}
-                  onChange={(e) => handleInputChange('location', e.target.value)}
-                  className={`w-full px-3 py-2 rounded-lg border ${
-                    theme === 'dark'
-                      ? 'bg-slate-800 border-slate-600 text-white'
-                      : 'bg-white border-gray-300 text-gray-900'
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                >
-                  {ukrainianCities.map((city) => (
-                    <option key={city} value={city}>{city}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Bio */}
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  Bio
-                </label>
-                <textarea
-                  value={profileData.bio}
-                  onChange={(e) => handleInputChange('bio', e.target.value)}
-                  rows={4}
-                  className={`w-full px-3 py-2 rounded-lg border ${
-                    theme === 'dark'
-                      ? 'bg-slate-800 border-slate-600 text-white'
-                      : 'bg-white border-gray-300 text-gray-900'
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                  placeholder="Tell others about yourself and your humanitarian work..."
-                />
-                <div className={`text-xs mt-1 text-right ${
-                  bioCharCount > 450 ? 'text-red-500' : theme === 'dark' ? 'text-slate-400' : 'text-gray-600'
-                }`}>
-                  {bioCharCount}/500 characters
-                </div>
-              </div>
-
-              {/* Social Links */}
-              <div>
-                <label className={`block text-sm font-medium mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  Social Media Links
-                </label>
-                <div className="space-y-3">
-                  {Object.entries(profileData.socialLinks).map(([platform, value]) => (
-                    <div key={platform}>
-                      <input
-                        type="url"
-                        value={value}
-                        onChange={(e) => handleSocialLinkChange(platform, e.target.value)}
-                        className={`w-full px-3 py-2 rounded-lg border ${
-                          theme === 'dark'
-                            ? 'bg-slate-800 border-slate-600 text-white'
-                            : 'bg-white border-gray-300 text-gray-900'
-                        } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                        placeholder={`${platform.charAt(0).toUpperCase() + platform.slice(1)} URL`}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
+  return (
+    <div className="max-w-4xl mx-auto">
+      {/* Profile Header */}
+      <div className={`rounded-xl border p-8 ${
+        theme === 'dark' 
+          ? 'bg-slate-800 border-slate-700' 
+          : 'bg-white border-gray-200'
+      }`}>
+        {/* Top Section with Edit Button */}
+        <div className="flex justify-between items-start mb-6">
+          <div className="flex items-start space-x-6">
+            {/* Profile Image */}
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-white text-4xl font-bold shadow-lg">
+              {userData.profileImage ? (
+                <img src={userData.profileImage} alt={userData.name} className="w-full h-full rounded-full object-cover" />
+              ) : (
+                userData.name.charAt(0)
+              )}
             </div>
 
-            <div className="flex justify-end mt-6">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2">
-                <Save className="w-4 h-4" />
-                <span>Save Profile</span>
-              </button>
+            {/* Profile Info */}
+            <div className="flex-1">
+              <div className="flex items-center space-x-2 mb-2">
+                <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                  {userData.name}
+                </h1>
+                {userData.verified && (
+                  <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm">✓</span>
+                  </div>
+                )}
+                <span className={`px-3 py-1 text-sm rounded-full ${getRoleBadgeColor(userData.role)}`}>
+                  {userData.role}
+                </span>
+              </div>
+              
+              <p className={`text-lg mb-3 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+                {userData.username}
+              </p>
+
+              <p className={`text-base leading-relaxed mb-4 ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
+                {userData.bio}
+              </p>
+
+              {/* Location and Join Date */}
+              <div className="flex items-center space-x-4 text-sm">
+                <div className="flex items-center space-x-1">
+                  <MapPin className={`w-4 h-4 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`} />
+                  <span className={theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}>
+                    {userData.location}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <Calendar className={`w-4 h-4 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`} />
+                  <span className={theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}>
+                    Joined {userData.joinDate}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Profile Sharing */}
-          <div 
-            style={gradientStyle}
-            className={`rounded-xl p-6 border ${
-              theme === 'dark' ? 'border-slate-700' : 'border-gray-200'
+          {/* Edit Profile Button */}
+          <button
+            onClick={handleEditProfile}
+            className={`flex items-center space-x-2 px-6 py-2 rounded-full border font-medium transition-colors ${
+              theme === 'dark'
+                ? 'border-slate-600 text-slate-300 hover:bg-slate-700'
+                : 'border-gray-300 text-gray-700 hover:bg-gray-50'
             }`}
           >
-            <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-              Share Your Profile
+            <Edit className="w-4 h-4" />
+            <span>Edit Profile</span>
+          </button>
+        </div>
+
+        {/* Stats Section */}
+        <div className="flex items-center space-x-6 mb-6">
+          <button
+            onClick={() => setShowFollowingModal(true)}
+            className={`hover:underline ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}
+          >
+            <span className={`font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              {userData.following}
+            </span>{' '}
+            Following
+          </button>
+          <button
+            onClick={() => setShowFollowersModal(true)}
+            className={`hover:underline ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}
+          >
+            <span className={`font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              {userData.followers}
+            </span>{' '}
+            Followers
+          </button>
+        </div>
+
+        {/* Role-Specific Buttons */}
+        <div className="flex space-x-3 mb-6">
+          {userData.settings.showDonationsButton && userData.role === 'Donor' && (
+            <button className="bg-yellow-400 hover:bg-yellow-500 text-slate-900 px-6 py-2 rounded-full font-medium transition-colors flex items-center space-x-2">
+              <Gift className="w-4 h-4" />
+              <span>View My Donations</span>
+            </button>
+          )}
+          {userData.settings.showWishlistButton && userData.role === 'Recipient' && (
+            <button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full font-medium transition-colors flex items-center space-x-2">
+              <Heart className="w-4 h-4" />
+              <span>View My Wishlist</span>
+            </button>
+          )}
+        </div>
+
+        {/* Social Links */}
+        {Object.entries(userData.socialLinks).some(([_, url]) => url) && (
+          <div>
+            <h3 className={`text-lg font-semibold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Connect
             </h3>
-            <div className="flex items-center space-x-4">
-              <div className="flex-1">
-                <input
-                  type="text"
-                  value="https://platforma.org/profile/oleksandr-p-kyiv"
-                  readOnly
-                  className={`w-full px-3 py-2 rounded-lg border ${
-                    theme === 'dark'
-                      ? 'bg-slate-800 border-slate-600 text-white'
-                      : 'bg-gray-50 border-gray-300 text-gray-900'
-                  }`}
-                />
-              </div>
-              <button
-                onClick={copyProfileLink}
-                className={`px-4 py-2 rounded-lg border transition-colors flex items-center space-x-2 ${
-                  copySuccess
-                    ? 'bg-green-100 border-green-300 text-green-700'
-                    : theme === 'dark'
-                    ? 'border-slate-600 text-slate-300 hover:bg-slate-800'
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                <Copy className="w-4 h-4" />
-                <span>{copySuccess ? 'Copied!' : 'Copy'}</span>
-              </button>
-              <button className={`px-4 py-2 rounded-lg border transition-colors ${
-                theme === 'dark'
-                  ? 'border-slate-600 text-slate-300 hover:bg-slate-800'
-                  : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-              }`}>
-                <QrCode className="w-4 h-4" />
-              </button>
-              <button className={`px-4 py-2 rounded-lg border transition-colors ${
-                theme === 'dark'
-                  ? 'border-slate-600 text-slate-300 hover:bg-slate-800'
-                  : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-              }`}>
-                <Share2 className="w-4 h-4" />
-              </button>
+            <div className="flex flex-wrap gap-3">
+              {Object.entries(userData.socialLinks).map(([platform, url]) => (
+                url && (
+                  <a
+                    key={platform}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-full border transition-colors ${
+                      theme === 'dark'
+                        ? 'border-slate-600 text-slate-300 hover:bg-slate-700'
+                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span className="capitalize">{platform}</span>
+                  </a>
+                )
+              ))}
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      {/* Followers Tab */}
-      {activeTab === 'followers' && (
+      {/* Recent Activity Section */}
+      <div className={`mt-6 rounded-xl border p-6 ${
+        theme === 'dark' 
+          ? 'bg-slate-800 border-slate-700' 
+          : 'bg-white border-gray-200'
+      }`}>
+        <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+          Recent Activity
+        </h3>
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            {followers.map((follower) => (
-              <div 
-                key={follower.id}
-                style={gradientStyle}
-                className={`rounded-xl p-4 border ${
-                  theme === 'dark' ? 'border-slate-700' : 'border-gray-200'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center">
-                      <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                        {follower.name.charAt(0)}
-                      </span>
-                    </div>
-                    <div>
-                      <div className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                        {follower.name}
-                      </div>
-                      <div className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-                        {follower.location}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className={`px-2 py-1 text-xs rounded-full ${getRoleBadgeColor(follower.role)}`}>
-                      {follower.role}
-                    </span>
-                    <div className={`text-xs mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-                      {follower.followers} followers
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-2 bg-green-500 rounded-full" />
+            <span className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
+              Donated medical supplies to Kharkiv Regional Hospital
+            </span>
+            <span className={`text-xs ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`}>
+              2 days ago
+            </span>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-2 bg-blue-500 rounded-full" />
+            <span className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
+              Started following MedSupply Ukraine
+            </span>
+            <span className={`text-xs ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`}>
+              1 week ago
+            </span>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="w-2 h-2 bg-yellow-500 rounded-full" />
+            <span className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
+              Shared Emergency Medical Center wishlist
+            </span>
+            <span className={`text-xs ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`}>
+              2 weeks ago
+            </span>
           </div>
         </div>
-      )}
+      </div>
 
-      {/* Following Tab */}
-      {activeTab === 'following' && (
-        <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            {following.map((followed) => (
-              <div 
-                key={followed.id}
-                style={gradientStyle}
-                className={`rounded-xl p-4 border ${
-                  theme === 'dark' ? 'border-slate-700' : 'border-gray-200'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center">
-                      <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                        {followed.name.charAt(0)}
-                      </span>
-                    </div>
-                    <div>
-                      <div className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                        {followed.name}
-                      </div>
-                      <div className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-                        {followed.location}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className={`px-2 py-1 text-xs rounded-full ${getRoleBadgeColor(followed.role)}`}>
-                      {followed.role}
-                    </span>
-                    <div className={`text-xs mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-                      {followed.followers} followers
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Modals */}
+      {showFollowersModal && <FollowersModal />}
+      {showFollowingModal && <FollowingModal />}
     </div>
   );
 };
