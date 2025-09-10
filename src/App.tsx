@@ -33,9 +33,14 @@ import { SupplierOrders } from './components/dashboards/SupplierOrders';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { DonorHistory } from './components/dashboards/DonorHistory';
 import { MyPublicProfile } from './components/Profile/MyPublicProfile';
+import { ProfileSettings } from './components/Profile/ProfileSettings';
 
 const AppContent: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
+
+  const handleNavigate = (section: string) => {
+    setActiveSection(section);
+  };
 
   const renderContent = () => {
     switch (activeSection) {
@@ -133,7 +138,11 @@ const AppContent: React.FC = () => {
         );
       case 'my-public-profile':
         return (
-          <MyPublicProfile />
+          <MyPublicProfile onNavigate={handleNavigate} />
+        );
+      case 'profile-settings':
+        return (
+          <ProfileSettings />
         );
       default:
         return <HomeDashboard />;

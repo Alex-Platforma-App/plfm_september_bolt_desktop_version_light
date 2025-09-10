@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { MapPin, Calendar, ExternalLink, Edit, Users, Heart, MessageCircle, Share2, Stethoscope, Shield, Truck, Activity } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 
-export const MyPublicProfile: React.FC = () => {
+interface MyPublicProfileProps {
+  onNavigate?: (section: string) => void;
+}
+
+export const MyPublicProfile: React.FC<MyPublicProfileProps> = ({ onNavigate }) => {
   const { theme } = useTheme();
+  const { user } = useAuth();
   const [showFollowersModal, setShowFollowersModal] = useState(false);
   const [showFollowingModal, setShowFollowingModal] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   // Dr. Oksana Marchenko - Medical Evacuation Specialist Profile
   const userData = {
@@ -98,6 +105,33 @@ export const MyPublicProfile: React.FC = () => {
         return <Activity className="w-4 h-4 text-gray-500" />;
     }
   };
+
+  const handleEditProfile = () => {
+    if (onNavigate) {
+      onNavigate('profile-settings');
+    }
+  };
+
+  const handleViewWishlist = () => {
+    if (onNavigate) {
+      onNavigate('my-wishlist');
+    }
+  };
+
+  const handleFollow = () => {
+    setIsFollowing(!isFollowing);
+    console.log(isFollowing ? 'Unfollowed Dr. Oksana' : 'Followed Dr. Oksana');
+  };
+
+  const handleShare = () => {
+    const profileUrl = `${window.location.origin}/profile/${userData.id}`;
+    navigator.clipboard.writeText(profileUrl).then(() => {
+      console.log('Profile URL copied to clipboard');
+    });
+  };
+
+  // Check if current user is viewing their own profile
+  const isOwnProfile = user?.email === 'dr.oksana.marchenko@example.com';
 
   const FollowersModal = () => (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -202,7 +236,7 @@ export const MyPublicProfile: React.FC = () => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mt-8">
       {/* Profile Header */}
       <div className={`rounded-xl p-8 border ${
         theme === 'dark' 
@@ -266,23 +300,54 @@ export const MyPublicProfile: React.FC = () => {
               </div>
             </div>
           </div>
-          <button
-            onClick={handleEditProfile}
-            className={`flex items-center space-x-2 px-6 py-2 rounded-full border font-medium transition-colors ${
-              theme === 'dark'
-                ? 'border-slate-600 text-slate-300 hover:bg-slate-700'
-                : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-            }`}
-          >
-            <Edit className="w-4 h-4" />
-            <span>Edit Profile</span>
-          </button>
+          {isOwnProfile ? (
+            <button
+              onClick={handleEditProfile}
+              className={`flex items-center space-x-2 px-6 py-2 rounded-full border font-medium transition-colors ${
+                theme === 'dark'
+                  ? 'border-slate-600 text-slate-300 hover:bg-slate-700'
+                  : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              <Edit className="w-4 h-4" />
+              <span>Edit Profile</span>
+            </button>
+          ) : (
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={handleFollow}
+                className={`px-6 py-2 rounded-full font-medium transition-colors ${
+                  isFollowing
+                    ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    : 'bg-blue-600 hover:bg-blue-700 text-white'
+                }`}
+              >
+                {isFollowing ? 'Following' : 'Follow'}
+              </button>
+              <button
+                onClick={handleShare}
+                className={`px-4 py-2 rounded-full border transition-colors ${
+                  theme === 'dark'
+                    ? 'border-slate-600 text-slate-300 hover:bg-slate-700'
+                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                <Share2 className="w-4 h-4" />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Stats Section */}
         <div className="flex items-center space-x-6 mt-6 mb-6">
           <button
             onClick={() => setShowFollowingModal(true)}
+            className={`flex items-center space-x-2 px-6 py-2 rounded-full border font-medium transition-colors ${
+              theme === 'dark'
+                ? 'border-slate-600 text-slate-300 hover:bg-slate-700'
+                : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+            }`}
+          >
             className={`hover:underline ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}
           >
             <span className={`font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
@@ -304,7 +369,13 @@ export const MyPublicProfile: React.FC = () => {
         {/* Primary CTA - View My Wishlist */}
         {userData.settings.showWishlistButton && (
           <div className="mb-6">
-            <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-medium transition-colors flex items-center space-x-2 text-lg">
+            <button 
+              onClick={handleViewWishlist}
+              className="text-white px-8 py-3 rounded-full font-medium transition-all duration-200 flex items-center space-x-2 text-lg hover:shadow-lg hover:scale-105"
+              style={{
+                background: 'linear-gradient(135deg, #131B27 0%, #182231 25%, #1C283A 50%, #1F2C40 75%, #223046 100%)'
+              }}
+            >
               <Heart className="w-5 h-5" />
               <span>View My Medical Supply Wishlist</span>
             </button>

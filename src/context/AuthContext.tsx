@@ -33,8 +33,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>({
     id: '1',
     name: 'Oleksandr Petrenko',
-    email: 'oleksandr@example.com',
-    avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150'
+    email: 'dr.oksana.marchenko@example.com',
+    avatar: 'https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg?auto=compress&cs=tinysrgb&w=150'
   });
 
   const isAuthenticated = !!user;
